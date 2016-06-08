@@ -2,6 +2,10 @@
 #include "ui_erstanmeldung_adm.h"
 #include "dbmanager.h"
 #include "global.h"
+#include "haushaltsverwaltung.h"
+
+Haushaltsverwaltung *newLoginWindow = 0;
+
 Erstanmeldung_adm::Erstanmeldung_adm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Erstanmeldung_adm)
@@ -21,12 +25,15 @@ void Erstanmeldung_adm::on_btn_EaBeenden_clicked()
 
 void Erstanmeldung_adm::on_btn_EaAnlegen_clicked()
 {
+    //TODO Prüfen auf Korrektheit der Eingaben
     QString email = ui->txt_EaEmail->text();
     QString name = ui->txt_EaNachname->text();
     QString vname = ui->txt_EaVorname->text();
     QString geb = ui->txt_EaGeburtsdatum->text();
     QString stdpw = "0000";
     if(db->addUser(email, name, vname, geb, stdpw)) {
-
+        this->hide();
+        newLoginWindow = new Haushaltsverwaltung();
+        newLoginWindow->show();
     }
 }

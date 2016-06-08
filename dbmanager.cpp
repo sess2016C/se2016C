@@ -42,18 +42,18 @@ int DBManager::connectUser(QString &email, QString &pwd) { //0 = fehlgeschlagen,
     if(query.exec()) {
        while(query.next()) {
            QString curr_pw = query.value(6).toString();
+           int bID = query.value(0).toInt();
+           bool admin = query.value(1).toInt() == 0 ? true : false;
+           QString email = query.value(2).toString();
+           QString geb = query.value(3).toString();
+           QString name = query.value(4).toString();
+           QString vname = query.value(5).toString();
+           QString pwd = query.value(6).toString();
+           user = new User(bID, admin, email, geb, name, vname, pwd);
            if(curr_pw == "0000") {//Standardpasswort
                 return 2;
            }
            else {
-               int bID = query.value(0).toInt();
-               bool admin = query.value(1).toInt() == 0 ? true : false;
-               QString email = query.value(2).toString();
-               QString geb = query.value(3).toString();
-               QString name = query.value(4).toString();
-               QString vname = query.value(5).toString();
-               QString pwd = query.value(6).toString();
-               user = new User(bID, admin, email, geb, name, vname, pwd);
                return 1;
            }
        }
@@ -100,16 +100,16 @@ bool DBManager::resetPW(QString &email) {
 
 bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &geb, QString &stdpw) {
     QSqlQuery query;
-    query.prepare("SELECT IFNULL(MAX(bID), 1) FROM Benutzer");
+    query.prepare("SELECT IFNULL(MAX(bID), 0) FROM Benutzer");
     query.exec();
     query.next();
     int count = query.value(0).toInt();
     query.prepare("INSERT INTO Benutzer (bID, administrator, email, geb, name, vname, pwd) VALUES ((:bID), (:admin), (:email), (:geb), (:name), (:vname), (:stdpw))");
     query.bindValue(":bID", count + 1);
     if(count == 0) {
-        query.bindValue(":admin", 1); //true
+        query.bindValue(":admin", 0); //true
     } else {
-        query.bindValue(":admin", 0); //false
+        query.bindValue(":admin", 1); //false
     }
     query.bindValue(":email", email);
     query.bindValue(":geb", geb);
@@ -152,17 +152,37 @@ bool DBManager::addTransaction(int tID, QString &beschr, int betr, QString &date
     int count = query.value(0).toInt();
 
     query.prepare("INSERT INTO Transaktion(tID, betrag, datum, beschr, quelle, kID, bID, zID) VALUES ((:tID), (:beschr), (:betr), (:date), (:quelle), (:kID), (:bID), (:zID)");
-    query.bindValue("(:tID)", tID);
-    query.bindValue("(:beschr)", beschr);
-    query.bindValue("(:betr)", betr);
-    query.bindValue("(:date)", date);
-    query.bindValue("(:quelle)", quelle);
-    query.bindValue("(:kID)", kID);
-    query.bindValue("(:bID)", bID);
-    query.bindValue("(:zID)", zID);
+    query.bindValue(":tID", tID);
+    query.bindValue(":beschr", beschr);
+    query.bindValue(":betr", betr);
+    query.bindValue(":date", date);
+    query.bindValue(":quelle)", quelle);
+    query.bindValue(":kID", kID);
+    query.bindValue(":bID", bID);
+    query.bindValue(":zID", zID);
     if(query.exec()) {
         return true;
     }
+    return false;
+}
+
+bool DBManager::changeUserData(QString &name, QString &vname, QString &pwd, QString &geb) {
+    QSqlQuery query;
+    query.prepare("UPDATE Benutzer SET geb = (:geb), name = (:name), vname = (:vname), pwd = (:pwd) WHERE bID = (:bID)");
+    query.bindValue(":geb", geb);
+    query.bindValue(":name", name);
+    query.bindValue(":vname", vname);
+    query.bindValue(":pwd", pwd);
+    query.bindValue(":bID", user->getUID());
+    if(query.exec()) {
+        qDebug() << "updated user";
+        user->setGeb(geb);
+        user->setName(name);
+        user->setVname(vname);
+        user->setPwd(pwd);
+        return true;
+    }
+    qDebug() << query.lastError();
     return false;
 }
 

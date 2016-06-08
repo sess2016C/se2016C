@@ -18,6 +18,7 @@ public:
 
 private slots:
     void erstanmeldung();
+    void newPassword();
     void on_btn_ABeenden_clicked();
     void on_btn_AAnmelden_clicked();
 

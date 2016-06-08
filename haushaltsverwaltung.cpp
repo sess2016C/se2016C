@@ -6,6 +6,7 @@
 #include "erstanmeldung_adm.h"
 #include "dbmanager.h"
 #include "global.h"
+#include "newpassword.h"
 
 Hauptmenue *newWindow = 0;
 static const QString path = "haus.db";
@@ -24,6 +25,7 @@ Haushaltsverwaltung::Haushaltsverwaltung(QWidget *parent) :
     if(db->isEmpty()) {
         //erstanmeldung
         erstanmeldung();
+
     }
     else {
         ui->setupUi(this);
@@ -41,6 +43,12 @@ void Haushaltsverwaltung::erstanmeldung(){
     erstanmeldung_adm.exec();
 }
 
+void Haushaltsverwaltung::newPassword(){
+    NewPassword newPWDialog;
+    newPWDialog.setModal(true);
+    newPWDialog.exec();
+}
+
 void Haushaltsverwaltung::on_btn_ABeenden_clicked()
 {
     exit(0);
@@ -55,11 +63,12 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
         //qDebug() << "connected";
     } else {
         //qDebug() << "NOT connected";
-        exit(0); //TODO MSGBox mit retry
+        return; //TODO MSGBox mit retry
     }
     int ret = db->connectUser(benutzername, passwort);
     if(ret == 1) {
         this->hide();
+        qDebug() << user->isAdmin();
         if(user->isAdmin()) {
             newWindowadm = new hauptmenue_adm();
             newWindowadm->show();
@@ -75,9 +84,9 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
         msgBoxAn.exec();
     } else if(ret == 2) {
         //Anmeldung mit Standardpasswort
+        //TODO do this shit
         qDebug() << "anmeldung mit stdpw";
-        this->hide();
-        newWindow = new Hauptmenue();
+        newPassword();
     }
 
 }

@@ -29,7 +29,7 @@ public:
     bool showAccount();
     void editPaymentOptions();
     bool editTransaction(); //Uebergabewert? Oder hat Benutzer alle Transaktionen als Objekte und editTransaktion usw. kann als Objektmethode implementiert werden?
-    bool changeUserData(QString &name, QString & vname, QString &pw, int b_year, int b_month, int b_day);
+    bool changeUserData(QString &name, QString & vname, QString &pwd, QString &geb);
     bool deleteTransaction(); //s.o.
 private:
     QSqlDatabase m_db;
