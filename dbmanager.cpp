@@ -98,8 +98,22 @@ bool DBManager::resetPW(QString &email) {
     return false;
 }
 
-bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &geb, QString &stdpw) {
+bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &geb) {
     QSqlQuery query;
+    if(email == "" or name == "" or vname == "" or geb == "") {
+        qDebug() << "something was empty";
+        return false; //insert data
+    }
+    query.prepare("SELECT * FROM Benutzer WHERE email = (:email)");
+    query.bindValue(":email", email);
+    if(query.exec()) {
+        if(query.next()) {
+            int bid = query.value(0).toInt();
+            qDebug() << "user already existing: " << bid;
+            return false; //already existing
+        }
+    }
+
     query.prepare("SELECT IFNULL(MAX(bID), 0) FROM Benutzer");
     query.exec();
     query.next();
@@ -115,7 +129,7 @@ bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &
     query.bindValue(":geb", geb);
     query.bindValue(":name", name);
     query.bindValue(":vname", vname);
-    query.bindValue(":stdpw", stdpw);
+    query.bindValue(":stdpw", "0000");
     //Standardpasswort = 0000
     if(query.exec()) {
         return true;
@@ -126,17 +140,19 @@ bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &
 
 bool DBManager::delUser(QString &email) {
     QSqlQuery query;
-    query.prepare("DELETE FROM Benutzer WHERE email = (:email");
+    query.prepare("DELETE FROM Benutzer WHERE email = (:email)");
     query.bindValue(":email", email);
     if(query.exec()) {
         return true;
     }
+    qDebug() << "del User didnt work";
+    qDebug() << query.lastError();
     return false;
 }
 
 bool DBManager::delCat(QString &category){
     QSqlQuery query;
-    query.prepare("DELETE FROM Benutzer WHERE bez = (:cat");
+    query.prepare("DELETE FROM Kategorie WHERE bez = (:cat)");
     query.bindValue(":cat", category);
     if(query.exec()) {
         return true;

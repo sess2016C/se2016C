@@ -47,7 +47,7 @@
       <string>Vorname:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="txt_userName">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -75,7 +75,7 @@
       <string>Geburtsdatum:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="txt_userVname">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -85,7 +85,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QDateEdit" name="dateEdit">
+    <widget class="QDateEdit" name="txt_userGeb">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -131,7 +131,7 @@
       <string>Email:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
+    <widget class="QLineEdit" name="txt_userEmail">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -141,7 +141,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_BvAnlegen">
+    <widget class="QPushButton" name="btn_UserAnlegen">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -177,7 +177,7 @@
       <string>Email:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_4">
+    <widget class="QLineEdit" name="txt_delUserEmail">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -187,7 +187,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="btn_UserDel">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -223,7 +223,7 @@
       <string>Email:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_5">
+    <widget class="QLineEdit" name="txt_UserResetPW">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -233,7 +233,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
+    <widget class="QPushButton" name="btn_UserResetPW">
      <property name="geometry">
       <rect>
        <x>300</x>
@@ -262,6 +262,19 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>txt_userEmail</tabstop>
+  <tabstop>txt_userVname</tabstop>
+  <tabstop>txt_userName</tabstop>
+  <tabstop>txt_userGeb</tabstop>
+  <tabstop>btn_UserAnlegen</tabstop>
+  <tabstop>btn_BvAbbrechen</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>txt_delUserEmail</tabstop>
+  <tabstop>btn_UserDel</tabstop>
+  <tabstop>txt_UserResetPW</tabstop>
+  <tabstop>btn_UserResetPW</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

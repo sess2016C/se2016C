@@ -142,6 +142,12 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>txt_Benutzername</tabstop>
+  <tabstop>txt_Passwort</tabstop>
+  <tabstop>btn_AAnmelden</tabstop>
+  <tabstop>btn_ABeenden</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

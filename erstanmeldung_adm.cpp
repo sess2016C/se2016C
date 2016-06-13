@@ -30,10 +30,9 @@ void Erstanmeldung_adm::on_btn_EaAnlegen_clicked()
     QString name = ui->txt_EaNachname->text();
     QString vname = ui->txt_EaVorname->text();
     QString geb = ui->txt_EaGeburtsdatum->text();
-    QString stdpw = "0000";
-    if(db->addUser(email, name, vname, geb, stdpw)) {
+    if(db->addUser(email, name, vname, geb)) {
         this->hide();
-        newLoginWindow = new Haushaltsverwaltung();
-        newLoginWindow->show();
+    } else {
+        //TODO Fehlerfall
     }
 }

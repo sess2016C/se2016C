@@ -18,6 +18,12 @@ public:
 private slots:
     void on_btn_BvAbbrechen_clicked();
 
+    void on_btn_UserAnlegen_clicked();
+
+    void on_btn_UserDel_clicked();
+
+    void on_btn_UserResetPW_clicked();
+
 private:
     Ui::Benutzerverwaltung *ui;
 };

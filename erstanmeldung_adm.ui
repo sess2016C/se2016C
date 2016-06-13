@@ -152,6 +152,14 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>txt_EaEmail</tabstop>
+  <tabstop>txt_EaVorname</tabstop>
+  <tabstop>txt_EaNachname</tabstop>
+  <tabstop>txt_EaGeburtsdatum</tabstop>
+  <tabstop>btn_EaAnlegen</tabstop>
+  <tabstop>btn_EaBeenden</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -19,7 +19,7 @@ public:
     void disconnectUser();
     bool addCategory(QString &category);
     bool resetPW(QString &email);
-    bool addUser(QString &email, QString &name, QString & vname,QString &geb, QString &stdpw);
+    bool addUser(QString &email, QString &name, QString & vname,QString &geb);
     bool delUser(QString &email);
     bool delCat(QString &category);
 

@@ -27,9 +27,7 @@ Haushaltsverwaltung::Haushaltsverwaltung(QWidget *parent) :
         erstanmeldung();
 
     }
-    else {
-        ui->setupUi(this);
-    }
+    ui->setupUi(this);
 }
 
 Haushaltsverwaltung::~Haushaltsverwaltung()
