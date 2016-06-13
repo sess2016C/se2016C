@@ -18,8 +18,13 @@ public:
 private slots:
     void on_btn_KvAbbrechen_clicked();
 
+    void on_btn_BeHinzufuegen_clicked();
+
+    void on_btn_BeLoeschen_clicked();
+
 private:
     Ui::Kategorieverwaltung *ui;
+    void updateList();
 };
 
 #endif // KATEGORIEVERWALTUNG_H

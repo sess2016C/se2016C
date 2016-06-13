@@ -25,9 +25,10 @@ public:
 
     //----METHODEN FUER GUI-ANZEIGE----
     //englisch oder deutsch? qulle & zahlart können aber müssen nicht vorhanden sein, evtl. auffuellen mit null
-    bool addTransaction(int tID, QString &beschr, int betr, QString &date, QString &quelle, int kID, int bID, int zID);
+    bool addTransaction(QString &beschr, int betr, QString &date, QString &quelle, int kID, int bID, int zID);
     bool showAccount();
-    void editPaymentOptions();
+    bool addPayment(QString &pay, int uID);
+    bool delPayment(QString &pay, int uID);
     bool editTransaction(); //Uebergabewert? Oder hat Benutzer alle Transaktionen als Objekte und editTransaktion usw. kann als Objektmethode implementiert werden?
     bool changeUserData(QString &name, QString & vname, QString &pwd, QString &geb);
     bool deleteTransaction(); //s.o.

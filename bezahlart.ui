@@ -61,7 +61,7 @@
      <string>Hinzufügen</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txt_neueBez">
+   <widget class="QLineEdit" name="txt_zahlart">
     <property name="geometry">
      <rect>
       <x>22</x>
@@ -108,7 +108,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QListWidget" name="listWidget">
+  <widget class="QListWidget" name="list_bezahlart">
    <property name="geometry">
     <rect>
      <x>10</x>

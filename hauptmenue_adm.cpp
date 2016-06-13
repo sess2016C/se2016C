@@ -3,6 +3,11 @@
 #include "haushaltsverwaltung.h"
 #include "benutzerverwaltung.h"
 #include "kategorieverwaltung.h"
+#include "erfassen.h"
+#include "abrechnung.h"
+#include "bezahlart.h"
+#include "benutzerdaten.h"
+
 Haushaltsverwaltung *newHaupmenuWindowAdm = 0;
 QTableWidget *tableAdm;
 
@@ -56,4 +61,18 @@ void hauptmenue_adm::on_btn_Abmelden_clicked()
     newHaupmenuWindowAdm = new Haushaltsverwaltung();
     newHaupmenuWindowAdm->show();
 
+}
+
+void hauptmenue_adm::on_btn_Erfassen_clicked()
+{
+    Erfassen erfassen;
+    erfassen.setModal(true);
+    erfassen.exec();
+}
+
+void hauptmenue_adm::on_btn_Bezahlart_clicked()
+{
+    Bezahlart bezahlart;
+    bezahlart.setModal(true);
+    bezahlart.exec();
 }

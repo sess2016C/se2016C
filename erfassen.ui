@@ -67,7 +67,7 @@
      <string>Datum:*</string>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit">
+   <widget class="QDateEdit" name="txt_erf_date">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -77,7 +77,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="txt_erf_amount">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -100,7 +100,7 @@
      <string>Kategorie:*</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="combo_cat">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -152,7 +152,7 @@
      <string>Zahlungsart:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="txt_erf_source">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -162,7 +162,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="txt_erf_payment">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -201,7 +201,7 @@
      <string>Beschreibung:</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="txt_erf_description">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -226,6 +226,16 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>txt_erf_date</tabstop>
+  <tabstop>txt_erf_amount</tabstop>
+  <tabstop>combo_cat</tabstop>
+  <tabstop>txt_erf_source</tabstop>
+  <tabstop>txt_erf_payment</tabstop>
+  <tabstop>txt_erf_description</tabstop>
+  <tabstop>btn_ErErfassen</tabstop>
+  <tabstop>btn_ErAbbrechen</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

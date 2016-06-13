@@ -75,16 +75,18 @@ bool DBManager::addCategory(QString &category) {
     if(query.next()) {
         return false;
     }
-    query.prepare("SELECT IFNULL(MAX(kID), 1) FROM Kategorie");
+    query.prepare("SELECT IFNULL(MAX(kID), 0) FROM Kategorie");
     query.exec();
     query.next();
     int count = query.value(0).toInt();
-    query.prepare("INSERT INTO Kategorie (kID, bez) VALUES ((:c), (:bez)");
+
+    query.prepare("INSERT INTO Kategorie (kID, bez) VALUES ((:c), (:bez))");
     query.bindValue(":c", count + 1);
     query.bindValue(":bez", category);
     if(query.exec()) {
         return true;
     }
+    qDebug() << query.lastError();
     return false;
 }
 
@@ -160,15 +162,15 @@ bool DBManager::delCat(QString &category){
     return false;
 }
 
-bool DBManager::addTransaction(int tID, QString &beschr, int betr, QString &date, QString &quelle, int kID, int bID, int zID) {
+bool DBManager::addTransaction(QString &beschr, int betr, QString &date, QString &quelle, int kID, int bID, int zID) {
     QSqlQuery query;
-    query.prepare("SELECT IFNULL(MAX(tID), 1) FROM Transaktion");
+    query.prepare("SELECT IFNULL(MAX(tID), 0) FROM Transaktion");
     query.exec();
     query.next();
     int count = query.value(0).toInt();
 
     query.prepare("INSERT INTO Transaktion(tID, betrag, datum, beschr, quelle, kID, bID, zID) VALUES ((:tID), (:beschr), (:betr), (:date), (:quelle), (:kID), (:bID), (:zID)");
-    query.bindValue(":tID", tID);
+    query.bindValue(":tID", count + 1);
     query.bindValue(":beschr", beschr);
     query.bindValue(":betr", betr);
     query.bindValue(":date", date);
@@ -202,4 +204,41 @@ bool DBManager::changeUserData(QString &name, QString &vname, QString &pwd, QStr
     return false;
 }
 
+bool DBManager::addPayment(QString &pay, int uID) {
+    QSqlQuery query;
+    //Check if option already exists
+    query.prepare("SELECT * FROM Zahlart WHERE bez = (:pay) AND bID = (:bID)");
+    query.bindValue(":pay", pay);
+    query.bindValue(":bID", uID);
+    query.exec();
+    if(query.next()) {
+        return false;
+        //already exists for this user
+    }
 
+    //get new zID
+    query.prepare("SELECT IFNULL(MAX(zID), 0) FROM Zahlart");
+    query.exec();
+    query.next();
+    int zID = query.value(0).toInt() + 1;
+
+    //insert new paymentoption
+    query.prepare("INSERT INTO Zahlart (zID, bez, bID) VALUES ((:zID), (:bez), (:bID))");
+    query.bindValue(":zID", zID);
+    query.bindValue(":bez", pay);
+    query.bindValue(":bID", uID);
+    if(query.exec()) {
+        return true;
+    }
+    qDebug() << query.lastError();
+    return false;
+}
+
+bool DBManager::delPayment(QString &pay, int uID) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM Zahlart WHERE bez = (:pay) AND bID = (:uID)");
+    query.bindValue(":pay", pay);
+    query.bindValue(":uID", uID);
+    if(query.exec()) { return true; }
+    return false;
+}

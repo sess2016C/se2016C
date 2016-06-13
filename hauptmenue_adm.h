@@ -22,6 +22,10 @@ private slots:
 
     void on_btn_Abmelden_clicked();
 
+    void on_btn_Erfassen_clicked();
+
+    void on_btn_Bezahlart_clicked();
+
 private:
     Ui::hauptmenue_adm *ui;
 };

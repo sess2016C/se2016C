@@ -48,7 +48,7 @@
      <string>Hinzufügen</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txt_neueBez">
+   <widget class="QLineEdit" name="txt_newCategory">
     <property name="geometry">
      <rect>
       <x>22</x>
@@ -72,7 +72,7 @@
     <string>Kategorien:</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget">
+  <widget class="QListWidget" name="list_category">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -132,6 +132,13 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>txt_newCategory</tabstop>
+  <tabstop>btn_BeHinzufuegen</tabstop>
+  <tabstop>list_category</tabstop>
+  <tabstop>btn_BeLoeschen</tabstop>
+  <tabstop>btn_KvAbbrechen</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

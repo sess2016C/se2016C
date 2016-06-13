@@ -22,6 +22,8 @@ private slots:
 
     void on_btn_BeLoeschen_clicked();
 
+    void updateList();
+
 private:
     Ui::Bezahlart *ui;
 };
