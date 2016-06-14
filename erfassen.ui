@@ -162,13 +162,13 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txt_erf_payment">
+   <widget class="QComboBox" name="combo_paymentOption">
     <property name="geometry">
      <rect>
       <x>100</x>
       <y>50</y>
-      <width>113</width>
-      <height>21</height>
+      <width>111</width>
+      <height>22</height>
      </rect>
     </property>
    </widget>
@@ -231,7 +231,7 @@
   <tabstop>txt_erf_amount</tabstop>
   <tabstop>combo_cat</tabstop>
   <tabstop>txt_erf_source</tabstop>
-  <tabstop>txt_erf_payment</tabstop>
+  <tabstop>combo_paymentOption</tabstop>
   <tabstop>txt_erf_description</tabstop>
   <tabstop>btn_ErErfassen</tabstop>
   <tabstop>btn_ErAbbrechen</tabstop>

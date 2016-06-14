@@ -30,6 +30,7 @@ void Bezahlart::on_btn_BeHinzufuegen_clicked()
     if(db->addPayment(bez, user->getUID())) {
         qDebug() << "payment added";
         updateList();
+        ui->txt_zahlart->clear();
     }
 
 
@@ -49,7 +50,8 @@ void Bezahlart::on_btn_BeLoeschen_clicked()
 void Bezahlart::updateList() {
     ui->list_bezahlart->clear();
     QSqlQuery query;
-    query.prepare("SELECT bez FROM Zahlart");
+    query.prepare("SELECT bez FROM Zahlart WHERE bid = (:bid)");
+    query.bindValue(":bid", user->getUID());
     query.exec();
     while(query.next()) {
         ui->list_bezahlart->addItem(query.value(0).toString());

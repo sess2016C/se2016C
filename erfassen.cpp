@@ -10,7 +10,9 @@ Erfassen::Erfassen(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Erfassen)
 {
+
     ui->setupUi(this);
+    updateComboBox();
 }
 
 Erfassen::~Erfassen()
@@ -30,8 +32,9 @@ void Erfassen::on_btn_ErErfassen_clicked()
     int amount = amounttmp.toInt();
     QString cat = ui->combo_cat->currentText();
     QString source = ui->txt_erf_source->text();
-    QString payment = ui->txt_erf_payment->text();
+    QString payment = ui->combo_paymentOption->currentText();
     QString desc = ui->txt_erf_description->toPlainText();
+    int bID = user->getUID();
 
     //get Category ID
     int catID;
@@ -46,18 +49,38 @@ void Erfassen::on_btn_ErErfassen_clicked()
     //get payment ID
     int zID;
     query.prepare("SELECT zID FROM Zahlart WHERE bez = (:payment) AND bID = (:bID)");
-    query.bindValue(":bez", payment);
-    query.bindValue(":bID", user->getUID());
+    query.bindValue(":payment", payment);
+    query.bindValue(":bID", bID);
     if(query.exec()) {
         if(query.next()) {
             zID = query.value(0).toInt();
         }
     }
     //got all nessecary data
-    db->addTransaction(desc, amount, date, source, catID, user->getUID(), zID);
+    if(db->addTransaction(desc, amount, date, source, catID, bID, zID)) {
+        qDebug() << "transaction added";
+    } else {
+        qDebug() << "something went wrong";
+    }
+
 
     this->hide();
     //QMessageBox msgBoxEr;
     //msgBoxEr.setText("Transaktion erfolgreich erfasst.");
     //msgBoxEr.exec();
+}
+
+void Erfassen::updateComboBox() {
+    QSqlQuery query;
+    query.prepare("SELECT bez FROM Kategorie");
+    query.exec();
+    while(query.next()) {
+        ui->combo_cat->addItem(query.value(0).toString());
+    }
+    query.prepare("SELECT bez FROM Zahlart WHERE bid = (:bid)");
+    query.bindValue(":bid", user->getUID());
+    query.exec();
+    while(query.next()) {
+        ui->combo_paymentOption->addItem(query.value(0).toString());
+    }
 }

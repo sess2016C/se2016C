@@ -22,6 +22,7 @@ private slots:
 
 private:
     Ui::Erfassen *ui;
+    void updateComboBox();
 };
 
 #endif // ERFASSEN_H

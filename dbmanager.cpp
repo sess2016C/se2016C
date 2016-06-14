@@ -169,7 +169,7 @@ bool DBManager::addTransaction(QString &beschr, int betr, QString &date, QString
     query.next();
     int count = query.value(0).toInt();
 
-    query.prepare("INSERT INTO Transaktion(tID, betrag, datum, beschr, quelle, kID, bID, zID) VALUES ((:tID), (:beschr), (:betr), (:date), (:quelle), (:kID), (:bID), (:zID)");
+    query.prepare("INSERT INTO Transaktion(tID, betrag, datum, beschr, quelle, kID, bID, zID) VALUES ((:tID), (:beschr), (:betr), (:date), (:quelle), (:kID), (:bID), (:zID))");
     query.bindValue(":tID", count + 1);
     query.bindValue(":beschr", beschr);
     query.bindValue(":betr", betr);
@@ -181,6 +181,7 @@ bool DBManager::addTransaction(QString &beschr, int betr, QString &date, QString
     if(query.exec()) {
         return true;
     }
+    qDebug() << query.lastError();
     return false;
 }
 
