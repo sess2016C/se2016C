@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>hauptmenue_adm</class>
+ <widget class="QMainWindow" name="hauptmenue_adm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>859</width>
+    <height>491</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Hauptmenü</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableWidget" name="tbl_Transaktionen">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>661</width>
+      <height>331</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Bezahlart">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>0</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wählen Sie ihre bevorzugten Zahlungsarten aus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>Bezahlart</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>90</y>
+      <width>161</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Letzte Transaktionen:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Abrechnung">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>111</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Erstellt ein Kategoriebozogenes- sowie ein Gesammtsaldo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>Abrechnung</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Benutzerdaten">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>0</y>
+      <width>171</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Benutzerdaten ändern</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Abmelden">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>0</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Meldet Sie vom System ab&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>Abmelden</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Erfassen">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pflegen Sie Ein- bzw. Ausgaben in das System ein&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>Erfassen</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>675</x>
+      <y>110</y>
+      <width>181</width>
+      <height>331</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>90</y>
+      <width>161</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Benutzer im Minus:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Benutzerverwaltung">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>0</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Benutzerverwaltung</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Kategorieverwaltung">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>0</y>
+      <width>161</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Kategorieverwaltung</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>859</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
