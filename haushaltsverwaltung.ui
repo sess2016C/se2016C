@@ -43,6 +43,9 @@
      <property name="toolTip">
       <string>Tragen Sie hier ihre Email ein</string>
      </property>
+     <property name="text">
+      <string>test@test.de</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="txt_Passwort">
      <property name="geometry">
@@ -52,6 +55,9 @@
        <width>161</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="text">
+      <string>1234</string>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>

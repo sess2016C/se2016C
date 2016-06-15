@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include "dbmanager.h"
 #include "global.h"
+#include "QMessageBox"
 
 Bezahlart::Bezahlart(QWidget *parent) :
     QDialog(parent),
@@ -27,6 +28,12 @@ void Bezahlart::on_btn_BeAbbrechen_clicked()
 void Bezahlart::on_btn_BeHinzufuegen_clicked()
 {
     QString bez = ui->txt_zahlart->text();
+    if(bez == "") {
+        QMessageBox msgBoxEr;
+        msgBoxEr.setText("Bitte geben Sie eine Zahlart an!");
+        msgBoxEr.exec();
+        return;
+    }
     if(db->addPayment(bez, user->getUID())) {
         qDebug() << "payment added";
         updateList();
@@ -37,7 +44,14 @@ void Bezahlart::on_btn_BeHinzufuegen_clicked()
 
 void Bezahlart::on_btn_BeLoeschen_clicked()
 {
+    if(ui->list_bezahlart->currentItem() == NULL) {
+        QMessageBox msgBoxEr;
+        msgBoxEr.setText("Bitte wählen Sie das zu löschende Element aus!");
+        msgBoxEr.exec();
+        return;
+    }
     QString bez = ui->list_bezahlart->currentItem()->text();
+    if(bez == "") return;
     if(db->delPayment(bez, user->getUID())) {
         updateList();
         qDebug() << "payment deleted";

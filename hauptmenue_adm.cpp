@@ -7,6 +7,7 @@
 #include "abrechnung.h"
 #include "bezahlart.h"
 #include "benutzerdaten.h"
+#include "global.h"
 
 Haushaltsverwaltung *newHaupmenuWindowAdm = 0;
 QTableWidget *tableAdm;
@@ -16,7 +17,10 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     ui(new Ui::hauptmenue_adm)
 {
     ui->setupUi(this);
-
+    if(!user->isAdmin()) {
+        ui->btn_Benutzerverwaltung->setVisible(false);
+        ui->btn_Kategorieverwaltung->setVisible(false);
+    }
     // Transaktionstabelle
     tableAdm = ui->tbl_Transaktionen;
 

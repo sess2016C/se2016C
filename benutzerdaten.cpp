@@ -33,6 +33,11 @@ void Benutzerdaten::on_btn_NuSpeichern_clicked()
     if(geb != "" and name != "" and vname != "") {
         db->changeUserData(name, vname, pwd, geb);
         qDebug() << "changed some data";
+        this->hide();
+    } else {
+        QMessageBox msgBoxEr;
+        msgBoxEr.setText("Bitte füllen Sie alle Felder aus!");
+        msgBoxEr.exec();
     }
-    this->hide();
+
 }

@@ -67,13 +67,8 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
     if(ret == 1) {
         this->hide();
         qDebug() << user->isAdmin();
-        if(user->isAdmin()) {
-            newWindowadm = new hauptmenue_adm();
-            newWindowadm->show();
-        } else {
-            newWindow = new Hauptmenue();
-            newWindow->show();
-        }
+        newWindowadm = new hauptmenue_adm();
+        newWindowadm->show();
 
 
     } else if(ret == 0){
