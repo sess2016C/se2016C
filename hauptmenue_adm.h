@@ -30,6 +30,7 @@ private slots:
 
 private:
     Ui::hauptmenue_adm *ui;
+    void updateTable(int rows);
 };
 
 #endif // HAUPTMENUE_ADM_H
