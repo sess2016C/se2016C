@@ -89,16 +89,17 @@ void hauptmenue_adm::on_btn_Benutzerdaten_clicked()
 
 void hauptmenue_adm::updateTable(int rows) {
     tableAdm->clear();
-    for( int i = 0; i < tableAdm->rowCount(); i++ ){
-        tableAdm->setCellWidget( i, 5, new QPushButton(QString("Details") ));
-    }
+
     QSqlQuery query;
-    int count = 0;
-    query.prepare("SELECT * FROM Transaktion WHERE bID = (:bid) ORDER BY date(datum) DESC");
+    query.prepare("SELECT * FROM Transaktion WHERE bID = (:bid) ORDER BY date(datum) DESC Limit (:lim)");
     query.bindValue(":bid", user->getUID());
+    query.bindValue(":lim", QString::number(rows));
     if(query.exec()) {
-        while(query.next() && count < rows) {
+        int table_row = 0;
+        while(query.next()) {
             QString datum = query.value(2).toString();
+            QStringList d = datum.split("-");
+            datum = d[2] + "." + d[1] + "." + d[0];
             QString betrag = query.value(1).toString();
             int betr = betrag.toDouble();
             betrag = QString::number(betr / 100) + "," + QString::number(betr % 100) + "€";
@@ -113,7 +114,6 @@ void hauptmenue_adm::updateTable(int rows) {
             kid_query.exec();
             kid_query.next();
             kID = kid_query.value(0).toString();
-            qDebug() << kID;
 
             //Get Paymentoption
             if(zID != "0") {
@@ -124,16 +124,16 @@ void hauptmenue_adm::updateTable(int rows) {
                 zid_query.exec();
                 zid_query.next();
                 zID = zid_query.value(0).toString();
-                qDebug() << zID;
             } else {
                 zID = "No Option defined";
             }
-            tableAdm->setItem(count,0, new QTableWidgetItem(datum));
-            tableAdm->setItem(count,1, new QTableWidgetItem(betrag));
-            tableAdm->setItem(count,2, new QTableWidgetItem(kID));
-            tableAdm->setItem(count,3, new QTableWidgetItem(quelle));
-            tableAdm->setItem(count,4, new QTableWidgetItem(zID));
-            count++;
+            tableAdm->setItem(table_row,0, new QTableWidgetItem(datum));
+            tableAdm->setItem(table_row,1, new QTableWidgetItem(betrag));
+            tableAdm->setItem(table_row,2, new QTableWidgetItem(kID));
+            tableAdm->setItem(table_row,3, new QTableWidgetItem(quelle));
+            tableAdm->setItem(table_row,4, new QTableWidgetItem(zID));
+            tableAdm->setCellWidget(table_row, 5, new QPushButton(QString("Details") ));
+            table_row++;
         }
     }
 }
