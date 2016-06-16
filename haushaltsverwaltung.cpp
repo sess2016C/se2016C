@@ -38,6 +38,7 @@ Haushaltsverwaltung::~Haushaltsverwaltung()
 void Haushaltsverwaltung::erstanmeldung(){
     Erstanmeldung_adm erstanmeldung_adm;
     erstanmeldung_adm.setModal(true);
+    erstanmeldung_adm.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint| Qt::WindowSystemMenuHint);
     erstanmeldung_adm.exec();
 }
 

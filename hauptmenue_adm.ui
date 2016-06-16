@@ -129,7 +129,7 @@
      <string>Erfassen</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="list_user_im_minus">
     <property name="geometry">
      <rect>
       <x>675</x>
@@ -139,7 +139,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_user_im_minus">
     <property name="geometry">
      <rect>
       <x>710</x>
@@ -191,7 +191,7 @@
      <x>0</x>
      <y>0</y>
      <width>859</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -21,6 +21,8 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     if(!user->isAdmin()) {
         ui->btn_Benutzerverwaltung->setVisible(false);
         ui->btn_Kategorieverwaltung->setVisible(false);
+        ui->label_user_im_minus->setVisible(false);
+        ui->list_user_im_minus->setVisible(false);
     }
     // Transaktionstabelle
     tableAdm = ui->tbl_Transaktionen;
