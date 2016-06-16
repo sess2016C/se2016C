@@ -44,6 +44,8 @@ void Erfassen::on_btn_ErErfassen_clicked()
     }
     if(amount_decimal == "") {
         amount_decimal = "00";
+    } else if(amount_decimal.length() == 1){
+        amount_decimal = amount_decimal + "0";
     }
     QString amounttxt = amount_txt + amount_decimal;
     int amount = amounttxt.toInt();

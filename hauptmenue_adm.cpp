@@ -35,9 +35,6 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     tableAdm->setHorizontalHeaderItem(4, new QTableWidgetItem(QString("Zahlungsart")));
     tableAdm->setHorizontalHeaderItem(5, new QTableWidgetItem(QString("")));
 
-    for( int i = 0; i < tableAdm->rowCount(); i++ ){
-        tableAdm->setCellWidget( i, 5, new QPushButton(QString("Details") ));
-    }
     updateTable(10);
 }
 
@@ -73,6 +70,7 @@ void hauptmenue_adm::on_btn_Erfassen_clicked()
     Erfassen erfassen;
     erfassen.setModal(true);
     erfassen.exec();
+    updateTable(10);
 }
 
 void hauptmenue_adm::on_btn_Bezahlart_clicked()
@@ -90,14 +88,20 @@ void hauptmenue_adm::on_btn_Benutzerdaten_clicked()
 }
 
 void hauptmenue_adm::updateTable(int rows) {
+    tableAdm->clear();
+    for( int i = 0; i < tableAdm->rowCount(); i++ ){
+        tableAdm->setCellWidget( i, 5, new QPushButton(QString("Details") ));
+    }
     QSqlQuery query;
     int count = 0;
-    query.prepare("SELECT * FROM Transaktion WHERE bID = (:bid)");
+    query.prepare("SELECT * FROM Transaktion WHERE bID = (:bid) ORDER BY date(datum) DESC");
     query.bindValue(":bid", user->getUID());
     if(query.exec()) {
         while(query.next() && count < rows) {
             QString datum = query.value(2).toString();
             QString betrag = query.value(1).toString();
+            int betr = betrag.toDouble();
+            betrag = QString::number(betr / 100) + "," + QString::number(betr % 100) + "€";
             QString kID = query.value(5).toString();
             QString quelle = query.value(4).toString();
             QString zID = query.value(7).toString();
