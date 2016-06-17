@@ -81,6 +81,9 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
         //TODO do this shit
         qDebug() << "anmeldung mit stdpw";
         newPassword();
+        newWindowadm = new hauptmenue_adm();
+        newWindowadm->show();
+        this->hide();
     }
 
 }
