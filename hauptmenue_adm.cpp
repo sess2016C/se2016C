@@ -103,7 +103,9 @@ void hauptmenue_adm::updateTable(int rows) {
             QStringList d = datum.split("-");
             datum = d[2] + "." + d[1] + "." + d[0];
             QString betrag = query.value(1).toString();
-            int betr = betrag.toDouble();
+            int betr = betrag.toInt();
+            bool einnahme = true;
+            if(betr < 0) { einnahme = false; }
             betrag = QString::number(betr / 100) + "," + QString::number(betr % 100) + "€";
             QString kID = query.value(5).toString();
             QString quelle = query.value(4).toString();
@@ -131,6 +133,12 @@ void hauptmenue_adm::updateTable(int rows) {
             }
             tableAdm->setItem(table_row,0, new QTableWidgetItem(datum));
             tableAdm->setItem(table_row,1, new QTableWidgetItem(betrag));
+            //set color for einnahme or ausgabe
+            if(einnahme) {
+                tableAdm->item(table_row, 1)->setBackgroundColor(Qt::green);
+            } else {
+                tableAdm->item(table_row, 1)->setBackgroundColor(Qt::red);
+            }
             tableAdm->setItem(table_row,2, new QTableWidgetItem(kID));
             tableAdm->setItem(table_row,3, new QTableWidgetItem(quelle));
             tableAdm->setItem(table_row,4, new QTableWidgetItem(zID));

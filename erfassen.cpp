@@ -55,6 +55,7 @@ void Erfassen::on_btn_ErErfassen_clicked()
     QString source = ui->txt_erf_source->text();
     QString payment = ui->combo_paymentOption->currentText();
     QString desc = ui->txt_erf_description->toPlainText();
+    bool einnahme = ui->rdbtn_einnahme->isChecked();
     int bID = user->getUID();
 
     //get Category ID
@@ -77,6 +78,8 @@ void Erfassen::on_btn_ErErfassen_clicked()
             zID = query.value(0).toInt();
         }
     }
+    //check for einnahme or ausgabe
+    if(!einnahme) { amount *= -1; }
     //got all nessecary data
     if(db->addTransaction(desc, amount, date, source, catID, bID, zID)) {
         qDebug() << "transaction added";
