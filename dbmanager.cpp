@@ -162,7 +162,7 @@ bool DBManager::delCat(QString &category){
     return false;
 }
 
-bool DBManager::addTransaction(QString &beschr, int betr, QString &date, QString &quelle, int kID, int bID, int zID) {
+bool DBManager::addTransaction(QString &beschr, qint64 betr, QString &date, QString &quelle, int kID, int bID, int zID) {
     QSqlQuery query;
     query.prepare("SELECT IFNULL(MAX(tID), 0) FROM Transaktion");
     query.exec();

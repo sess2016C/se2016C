@@ -103,7 +103,7 @@ void hauptmenue_adm::updateTable(int rows) {
             QStringList d = datum.split("-");
             datum = d[2] + "." + d[1] + "." + d[0];
             QString betrag = query.value(1).toString();
-            int betr = betrag.toInt();
+            qint64 betr = betrag.toLongLong();
             bool einnahme = true;
             if(betr < 0) { einnahme = false; }
             betrag = QString::number(betr / 100) + "," + QString::number(betr % 100) + "€";

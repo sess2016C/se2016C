@@ -50,7 +50,7 @@ void Erfassen::on_btn_ErErfassen_clicked()
         amount_decimal = amount_decimal + "0";
     }
     QString amounttxt = amount_txt + amount_decimal;
-    int amount = amounttxt.toInt();
+    qint64 amount = amounttxt.toLongLong();
     QString cat = ui->combo_cat->currentText();
     QString source = ui->txt_erf_source->text();
     QString payment = ui->combo_paymentOption->currentText();
