@@ -79,7 +79,6 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
     } else if(ret == 2) {
         //Anmeldung mit Standardpasswort
         //TODO do this shit
-        //tested
         qDebug() << "anmeldung mit stdpw";
         newPassword();
         newWindowadm = new hauptmenue_adm();
