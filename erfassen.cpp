@@ -1,5 +1,6 @@
 #include "erfassen.h"
 #include "ui_erfassen.h"
+#include "hauptmenue_adm.h"
 #include <QMessageBox>
 #include <QString>
 #include "global.h"
@@ -33,9 +34,8 @@ void Erfassen::on_btn_ErAbbrechen_clicked()
 
 void Erfassen::on_btn_ErErfassen_clicked()
 {
-    QString date = ui->txt_erf_date->text();
-    QStringList lst = date.split(".");
-    date = lst[2] + "-" + lst[1] + "-" + lst[0];
+    QString d = ui->txt_erf_date->text();
+    QString date = hauptmenue_adm::convertDate(d); //TODO test
     QString amount_decimal = ui->txt_decimal->text();
     QString amount_txt = ui->txt_erf_amount->text();
     if(amount_txt == "") {

@@ -20,8 +20,16 @@ public:
 private slots:
     void on_btn_AbAbbrechen_clicked();
 
+    void on_cmb_categories_currentIndexChanged(const QString &arg1);
+
+    void on_date_to_dateChanged(const QDate &date);
+
+    void on_date_from_dateChanged(const QDate &date);
+
 private:
     Ui::Abrechnung *ui;
+    void updateTable();
+    void updateComboBox();
 };
 
 #endif // ABRECHNUNG_H

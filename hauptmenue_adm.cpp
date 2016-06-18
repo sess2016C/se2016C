@@ -100,13 +100,12 @@ void hauptmenue_adm::updateTable(int rows) {
         int table_row = 0;
         while(query.next()) {
             QString datum = query.value(2).toString();
-            QStringList d = datum.split("-");
-            datum = d[2] + "." + d[1] + "." + d[0];
+            datum = convertDate(datum);
             QString betrag = query.value(1).toString();
             qint64 betr = betrag.toLongLong();
             bool einnahme = true;
             if(betr < 0) { einnahme = false; }
-            betrag = QString::number(betr / 100) + "," + QString::number(betr % 100) + "€";
+            betrag = QString::number(betr / 100) + "," + QString::number(betr / 10 % 10) + QString::number(betr % 10) + "€";
             QString kID = query.value(5).toString();
             QString quelle = query.value(4).toString();
             QString zID = query.value(7).toString();
@@ -146,4 +145,33 @@ void hauptmenue_adm::updateTable(int rows) {
             table_row++;
         }
     }
+}
+
+void hauptmenue_adm::on_btn_Abrechnung_clicked()
+{
+    Abrechnung abrechnung;
+    abrechnung.setModal(true);
+    abrechnung.exec();
+}
+
+QString hauptmenue_adm::convertDate(QString &date) {
+    if(date.contains("-")) {
+        QStringList d = date.split("-");
+        return d[2] + "." + d[1] + "." + d[0];
+    }
+    else {
+        QStringList d = date.split(".");
+        return d[2] + "-" + d[1] + "-" + d[0];
+    }
+}
+
+int hauptmenue_adm::getTableRowCount(QSqlQuery query) {
+    if(query.exec()) {
+        int count = 0;
+        while(query.next()) {
+            count++;
+        }
+        return count;
+    }
+    return -1;
 }

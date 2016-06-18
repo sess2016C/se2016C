@@ -2,6 +2,7 @@
 #define HAUPTMENUE_ADM_H
 
 #include <QMainWindow>
+#include <QSqlQuery>
 
 namespace Ui {
 class hauptmenue_adm;
@@ -14,6 +15,8 @@ class hauptmenue_adm : public QMainWindow
 public:
     explicit hauptmenue_adm(QWidget *parent = 0);
     ~hauptmenue_adm();
+    static QString convertDate(QString &date);
+    static int getTableRowCount(QSqlQuery query);
 
 private slots:
     void on_btn_Benutzerverwaltung_clicked();
@@ -27,6 +30,8 @@ private slots:
     void on_btn_Bezahlart_clicked();
 
     void on_btn_Benutzerdaten_clicked();
+
+    void on_btn_Abrechnung_clicked();
 
 private:
     Ui::hauptmenue_adm *ui;

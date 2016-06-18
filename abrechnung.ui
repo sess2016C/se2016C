@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>303</height>
+    <width>500</width>
+    <height>315</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>12</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -26,7 +26,7 @@
     <string>von:</string>
    </property>
   </widget>
-  <widget class="QDateEdit" name="dateEdit">
+  <widget class="QDateEdit" name="date_from">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -40,8 +40,8 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>10</y>
-     <width>61</width>
+     <y>12</y>
+     <width>21</width>
      <height>16</height>
     </rect>
    </property>
@@ -49,7 +49,7 @@
     <string>bis:</string>
    </property>
   </widget>
-  <widget class="QDateEdit" name="dateEdit_2">
+  <widget class="QDateEdit" name="date_to">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -62,8 +62,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>10</y>
+     <x>320</x>
+     <y>12</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -72,7 +72,7 @@
     <string>Kategorie:</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="cmb_categories">
    <property name="geometry">
     <rect>
      <x>380</x>
@@ -112,10 +112,23 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
+     <y>60</y>
      <width>481</width>
-     <height>221</height>
+     <height>201</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_selected_filter">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>471</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
