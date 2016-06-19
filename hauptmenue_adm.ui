@@ -129,16 +129,6 @@
      <string>Erfassen</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="list_user_im_minus">
-    <property name="geometry">
-     <rect>
-      <x>675</x>
-      <y>110</y>
-      <width>181</width>
-      <height>331</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_user_im_minus">
     <property name="geometry">
      <rect>
@@ -182,6 +172,16 @@
     </property>
     <property name="text">
      <string>Kategorieverwaltung</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tbl_negativeUsers">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>110</y>
+      <width>171</width>
+      <height>331</height>
+     </rect>
     </property>
    </widget>
   </widget>

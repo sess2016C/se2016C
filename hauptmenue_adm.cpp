@@ -12,6 +12,7 @@
 
 Haushaltsverwaltung *newHaupmenuWindowAdm = 0;
 QTableWidget *tableAdm;
+QTableWidget *negativ_users;
 
 hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     QMainWindow(parent),
@@ -22,7 +23,35 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
         ui->btn_Benutzerverwaltung->setVisible(false);
         ui->btn_Kategorieverwaltung->setVisible(false);
         ui->label_user_im_minus->setVisible(false);
-        ui->list_user_im_minus->setVisible(false);
+        ui->tbl_negativeUsers->setVisible(false);
+    } else {
+        //Fill list_user_im_minus
+        negativ_users = ui->tbl_negativeUsers;
+        negativ_users->horizontalHeader()->setStretchLastSection(true);
+        negativ_users->setColumnCount(2);
+        negativ_users->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Benutzer")));
+        negativ_users->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("Saldo")));
+        QSqlQuery query;
+        query.prepare("SELECT bID, sum(betrag) FROM Transaktion WHERE bid != (:bid) GROUP BY bID");
+        query.bindValue(":bid", user->getUID());
+        int count = getTableRowCount(query);
+        if(query.exec()) {
+            negativ_users->setRowCount(count);
+            int row = 0;
+            while(query.next()) {
+                int bid = query.value(0).toInt();
+                qint64 saldo = query.value(1).toLongLong();
+                QSqlQuery getEmail;
+                getEmail.prepare("SELECT email FROM Benutzer WHERE bid = (:bid)");
+                getEmail.bindValue(":bid", bid);
+                getEmail.exec();
+                getEmail.next();
+                QString user = getEmail.value(0).toString();
+                negativ_users->setItem(row, 0, new QTableWidgetItem(user));
+                negativ_users->setItem(row, 1, new QTableWidgetItem(convertNumberToSaldo(saldo)));
+                row++;
+            }
+        }
     }
     // Transaktionstabelle
     tableAdm = ui->tbl_Transaktionen;
@@ -174,4 +203,22 @@ int hauptmenue_adm::getTableRowCount(QSqlQuery query) {
         return count;
     }
     return -1;
+}
+
+qint64 hauptmenue_adm::getSaldo(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bID = (:bid)");
+    query.bindValue(":bid", userID);
+    if(query.exec()) {
+        if(query.next()) {
+            qint64 saldo = query.value(0).toLongLong();
+            return saldo;
+        }
+    }
+    return -1;
+}
+
+//convert qin64 to saldo string
+QString hauptmenue_adm::convertNumberToSaldo(qint64 number) {
+    return QString::number(number / 100) + "," + QString::number(number / 10 % 10) + QString::number(number % 10) + " €";
 }

@@ -62,8 +62,8 @@ void Abrechnung::updateTable() {
                 kid_query.next();
                 kID = kid_query.value(0).toString();
 
-                abTable->setItem(count, 0, new QTableWidgetItem(kID));
-                abTable->setItem(count, 1, new QTableWidgetItem(query.value(0).toString()));
+                abTable->setItem(count, 0, new QTableWidgetItem(kID)); //set category name
+                abTable->setItem(count, 1, new QTableWidgetItem(hauptmenue_adm::convertNumberToSaldo(query.value(0).toLongLong()))); //set category saldo
                 if(query.value(0).toLongLong() >= 0) {
                     abTable->item(count, 1)->setBackgroundColor(Qt::green);
                 }
@@ -75,13 +75,14 @@ void Abrechnung::updateTable() {
             }
             //add gesamt
             abTable->setItem(count, 0, new QTableWidgetItem("Gesamt: "));
-            qint64 saldo = 0;
-            qDebug() << abTable->rowCount();
-            for(int i = 0; i < abTable->rowCount() - 1; i++) {
-                saldo += abTable->item(i, 1)->text().toLongLong();
-            }
-            qDebug() << saldo;
-            abTable->setItem(count, 1, new QTableWidgetItem(QString::number(saldo)));
+
+            query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bid = (:bid)");
+            query.bindValue(":bid", user->getUID());
+            query.exec();
+            query.next();
+            qint64 saldo = query.value(0).toLongLong();
+            QString saldo_txt = hauptmenue_adm::convertNumberToSaldo(saldo);
+            abTable->setItem(count, 1, new QTableWidgetItem(saldo_txt));
         }
         else {
             qDebug() << query.lastError();
@@ -99,35 +100,39 @@ void Abrechnung::updateTable() {
             }
         }
 
-        query.prepare("SELECT sum(betrag), kid FROM Transaktion WHERE datum >= (:date_from) AND datum <= (:date_to) AND kID = (:sel_kid) GROUP BY kid");
+        query.prepare("SELECT sum(betrag), kid FROM Transaktion WHERE datum >= (:date_from) AND datum <= (:date_to) AND kID = (:sel_kid) AND bid = (:bid) GROUP BY kid");
 
         QString date_from = ui->date_from->text();
         query.bindValue(":date_from", hauptmenue_adm::convertDate(date_from));
         QString date_to = ui->date_to->text();
         query.bindValue(":date_to", hauptmenue_adm::convertDate(date_to));
         query.bindValue(":sel_kid", catID);
-        int row_count = hauptmenue_adm::getTableRowCount(query);
-        abTable->setRowCount(2);
+        query.bindValue(":bid", user->getUID());
+        abTable->setRowCount(2); //kategorie und gesamt
         if(query.exec()) {
-            int count = 0;
-            while(query.next()) {
-                abTable->setItem(count, 0, new QTableWidgetItem(ui->cmb_categories->currentText()));
-                abTable->setItem(count, 1, new QTableWidgetItem(query.value(0).toString()));
+            if(query.next()) {
+                abTable->setItem(0, 0, new QTableWidgetItem(ui->cmb_categories->currentText())); //category name
+                abTable->setItem(0, 1, new QTableWidgetItem(hauptmenue_adm::convertNumberToSaldo(query.value(0).toLongLong()))); //saldo
                 if(query.value(0).toLongLong() >= 0) {
-                    abTable->item(count, 1)->setBackgroundColor(Qt::green);
+                    abTable->item(0, 1)->setBackgroundColor(Qt::green);
                 }
                 else {
-                    abTable->item(count, 1)->setBackgroundColor(Qt::red);
+                    abTable->item(0, 1)->setBackgroundColor(Qt::red);
                 }
-                count++;
+                //add gesamt
+                abTable->setItem(1, 0, new QTableWidgetItem("Gesamt: "));
+                qint64 saldo = 0;
+                query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bid = (:bid) AND kid = (:catid)");
+                query.bindValue(":bid", user->getUID());
+                query.bindValue(":catid", catID);
+                query.exec();
+                query.next();
+                qDebug() << query.value(0).toLongLong();
+                abTable->setItem(1, 1, new QTableWidgetItem(hauptmenue_adm::convertNumberToSaldo(query.value(0).toLongLong())));
+            } else {
+                abTable->setRowCount(0);
             }
-            //add gesamt
-            abTable->setItem(count, 0, new QTableWidgetItem("Gesamt: "));
-            qint64 saldo = 0;
-            for(int i = 0; i < abTable->rowCount() - 1; i++) {
-                saldo += abTable->item(i, 1)->text().toLongLong();
-            }
-            abTable->setItem(count, 1, new QTableWidgetItem(QString::number(saldo)));
+
         }
 
     }
