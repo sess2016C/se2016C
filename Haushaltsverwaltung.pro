@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         haushaltsverwaltung.cpp \
-    hauptmenue.cpp \
     erfassen.cpp \
     abrechnung.cpp \
     bezahlart.cpp \
@@ -33,7 +32,6 @@ SOURCES += main.cpp\
     transaktionsliste.cpp
 
 HEADERS  += haushaltsverwaltung.h \
-    hauptmenue.h \
     erfassen.h \
     abrechnung.h \
     bezahlart.h \
@@ -53,7 +51,6 @@ HEADERS  += haushaltsverwaltung.h \
     transaktionsliste.h
 
 FORMS    += haushaltsverwaltung.ui \
-    hauptmenue.ui \
     erfassen.ui \
     abrechnung.ui \
     bezahlart.ui \

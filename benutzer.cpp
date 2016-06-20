@@ -34,7 +34,3 @@ void benutzer::setName(QString &name) { this->name = name; }
 void benutzer::setVname(QString &Vname) { this->vname = Vname; }
 
 void benutzer::setPwd(QString &pwd) { this->pwd = pwd; }
-
-bool benutzer::anmeldung(QString email, QString passwort) {
-
-}

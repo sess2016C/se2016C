@@ -6,8 +6,16 @@
 #include <QDebug>
 #include <QSqlError>
 
+/**
+ * @brief abTable Zeiger auf die Tabelle, welche die Abrechnung enthält.
+ */
 QTableWidget *abTable;
 
+/**
+ * @brief Abrechnung::Abrechnung
+ * Erstellt das Abrechnungsfenster und initialisiert die Tabelle, in denen die Abrechnung und das Gesamtsalod angezeigt werden.
+ * @param parent Standardparameter
+ */
 Abrechnung::Abrechnung(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Abrechnung)
@@ -27,16 +35,28 @@ Abrechnung::Abrechnung(QWidget *parent) :
 
 }
 
+/**
+ * @brief Abrechnung::~Abrechnung Destruktor für Abrechnung
+ */
 Abrechnung::~Abrechnung()
 {
     delete ui;
 }
 
+/**
+ * @brief Abrechnung::on_btn_AbAbbrechen_clicked
+ * Slot des Abbrechen-Buttons der Klasse Abrechnung. Versteckt den aufgerufenen Dialog.
+ */
 void Abrechnung::on_btn_AbAbbrechen_clicked()
 {
     this->hide();
 }
 
+/**
+ * @brief Abrechnung::updateTable
+ * Löscht den Inhalt der Tabelle. Dann wird die Tabelle neu aufgebaut
+ * und neu befüllt. Eine Unterscheidung nach Kategorien kann getroffen werden.
+ */
 void Abrechnung::updateTable() {
     abTable->clear();
 
@@ -142,6 +162,10 @@ void Abrechnung::updateTable() {
 
 }
 
+/**
+ * @brief Abrechnung::updateComboBox Aktualisiert die Combobox mit den in der Datenbank erhaltenen Kategorien und fügt zusätzlich eine Auswahlmöglichkeit
+ * "-- Alle anzeigen --" hinzu, die eine Abrechnung für alle Kategorien erstellt.
+ */
 void Abrechnung::updateComboBox() {
     QSqlQuery query;
     query.prepare("SELECT bez FROM Kategorie");
@@ -152,16 +176,28 @@ void Abrechnung::updateComboBox() {
     }
 }
 
+/**
+ * @brief Abrechnung::on_cmb_categories_currentIndexChanged Refresht die Tabelle, wenn sich die ausgewählte Kategorie geändert hat.
+ * @param arg1 Standardargument
+ */
 void Abrechnung::on_cmb_categories_currentIndexChanged(const QString &arg1)
 {
     updateTable();
 }
 
+/**
+ * @brief Abrechnung::on_date_to_dateChanged Refresht die Tabelle, wenn sich das ausgewählte Startdatum geändert hat.
+ * @param date Standardargument
+ */
 void Abrechnung::on_date_to_dateChanged(const QDate &date)
 {
     updateTable();
 }
 
+/**
+ * @brief Abrechnung::on_date_from_dateChanged Refresht die Tabelle, wenn sich das ausgewählte Enddatum geändert hat.
+ * @param date Standardargument
+ */
 void Abrechnung::on_date_from_dateChanged(const QDate &date)
 {
     updateTable();

@@ -7,6 +7,10 @@ namespace Ui {
 class Erfassen;
 }
 
+/**
+ * @brief The Erfassen class
+ * Header-Datei für die Klasse "erfassen"
+ */
 class Erfassen : public QDialog
 {
     Q_OBJECT

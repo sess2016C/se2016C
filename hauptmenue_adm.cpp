@@ -16,6 +16,14 @@ QTableWidget *tableAdm;
 QTableWidget *negativ_benutzers;
 QList <int> *transaktionen; //hier werden transaktionsids der angezeigten transaktionen gespeichert
 
+/**
+ * @brief hauptmenue_adm::hauptmenue_adm
+ * @param parent
+ * Erstellt das Hauptfenster der Anwendung.
+ * Dabei wird die Transaktionstabelle mit den
+ * letzten 10 Transaktionen des jeweiligen Benutzers
+ * gefüllt.
+ */
 hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::hauptmenue_adm)
@@ -70,11 +78,19 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     updateTable(10);
 }
 
+/**
+ * @brief hauptmenue_adm::~hauptmenue_adm
+ * Destruktor der Klasse "hauptmenue_adm".
+ */
 hauptmenue_adm::~hauptmenue_adm()
 {
     delete ui;
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Benutzerverwaltung_clicked
+ * Öffnet den Dialog zur Verwaltung der Benutzer.
+ */
 void hauptmenue_adm::on_btn_Benutzerverwaltung_clicked()
 {
     Benutzerverwaltung benutzerverwaltung;
@@ -82,6 +98,10 @@ void hauptmenue_adm::on_btn_Benutzerverwaltung_clicked()
     benutzerverwaltung.exec();
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Kategorieverwaltung_clicked
+ * Öffnet den Dialog zur Verwaltung der Kategorien.
+ */
 void hauptmenue_adm::on_btn_Kategorieverwaltung_clicked()
 {
     Kategorieverwaltung kategorieverwaltung;
@@ -89,6 +109,12 @@ void hauptmenue_adm::on_btn_Kategorieverwaltung_clicked()
     kategorieverwaltung.exec();
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Abmelden_clicked
+ * Meldet den aktuellen Benutzer vom System ab,
+ * schließt diesen Dialog und öffnet das Login-
+ * Fenster.
+ */
 void hauptmenue_adm::on_btn_Abmelden_clicked()
 {
     this->hide();
@@ -97,6 +123,10 @@ void hauptmenue_adm::on_btn_Abmelden_clicked()
 
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Erfassen_clicked
+ * Öffnet den Dialog zum Erfassen von Transaktionen.
+ */
 void hauptmenue_adm::on_btn_Erfassen_clicked()
 {
     Erfassen erfassen;
@@ -105,6 +135,10 @@ void hauptmenue_adm::on_btn_Erfassen_clicked()
     updateTable(10);
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Bezahlart_clicked
+ * Öffnet die Verwaltung von Zahlungsarten.
+ */
 void hauptmenue_adm::on_btn_Bezahlart_clicked()
 {
     Bezahlart bezahlart;
@@ -112,6 +146,10 @@ void hauptmenue_adm::on_btn_Bezahlart_clicked()
     bezahlart.exec();
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Benutzerdaten_clicked
+ * Öffnet den Dialog zur Anpassung der eigenen Benutzerdaten.
+ */
 void hauptmenue_adm::on_btn_Benutzerdaten_clicked()
 {
     Benutzerdaten benutzerdaten;
@@ -119,6 +157,14 @@ void hauptmenue_adm::on_btn_Benutzerdaten_clicked()
     benutzerdaten.exec();
 }
 
+
+/**
+ * @brief hauptmenue_adm::updateTable
+ * @param rows
+ * Aktualisiert die Transaktions-Tabelle im
+ * Hauptbildschirm mit den Daten aus der Daten-
+ * bank.
+ */
 void hauptmenue_adm::updateTable(int rows) {
     tableAdm->clear();
 
@@ -189,6 +235,10 @@ void hauptmenue_adm::updateTable(int rows) {
     }
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_Abrechnung_clicked
+ * Öffnet den Dialog für die Abrechnungsübersicht.
+ */
 void hauptmenue_adm::on_btn_Abrechnung_clicked()
 {
     Abrechnung abrechnung;
@@ -196,6 +246,14 @@ void hauptmenue_adm::on_btn_Abrechnung_clicked()
     abrechnung.exec();
 }
 
+/**
+ * @brief hauptmenue_adm::convertDate
+ * @param date
+ * @return 
+ * Konvertiert je nach Schreibweise das übergebene
+ * Datum ("-" oder ".") in die richtige Formatierung.
+ * (Datenbank: "-"-Format, Anzeige: "."-Format)
+ */
 QString hauptmenue_adm::convertDate(QString &date) {
     if(date.contains("-")) {
         QStringList d = date.split("-");
@@ -207,6 +265,14 @@ QString hauptmenue_adm::convertDate(QString &date) {
     }
 }
 
+/**
+ * @brief hauptmenue_adm::getTableRowCount
+ * @param query
+ * @return 
+ * Gibt die Anzahl der Reihen, die beim Ausführen des
+ * übergebenen Queries entstehen, zurück. -1 bei fehler-
+ * hafter Query.
+ */
 int hauptmenue_adm::getTableRowCount(QSqlQuery query) {
     if(query.exec()) {
         int count = 0;
@@ -218,6 +284,13 @@ int hauptmenue_adm::getTableRowCount(QSqlQuery query) {
     return -1;
 }
 
+/**
+ * @brief hauptmenue_adm::getSaldo
+ * @param benutzerID
+ * @return 
+ * Gibt das Saldo des übergebenen Benutzers zurück.
+ * -1, wenn der Benutzer nicht vorhanden ist.
+ */
 qint64 hauptmenue_adm::getSaldo(int benutzerID) {
     QSqlQuery query;
     query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bID = (:bid)");
@@ -231,11 +304,21 @@ qint64 hauptmenue_adm::getSaldo(int benutzerID) {
     return -1;
 }
 
-//convert qin64 to saldo string
+/**
+ * @brief hauptmenue_adm::convertNumberToSaldo
+ * @param number
+ * @return 
+ * Konvertiert die übergebene Zahl in einen QString.
+ */
 QString hauptmenue_adm::convertNumberToSaldo(qint64 number) {
     return QString::number(number / 100) + "," + QString::number(abs(number / 10 % 10)) + QString::number(abs(number % 10)) + " €";
 }
 
+/**
+ * @brief hauptmenue_adm::handleButton
+ * Dynamischer Aufruf der jeweiligen Detailansicht
+ * der Transaktionen.
+ */
 void hauptmenue_adm::handleButton() {
     int tid = transaktionen->at(((QPushButton*)sender())->objectName().toInt());
     Erfassen erfassen;
@@ -245,6 +328,10 @@ void hauptmenue_adm::handleButton() {
     updateTable(10);
 }
 
+/**
+ * @brief hauptmenue_adm::on_btn_transaktionsliste_clicked
+ * Öffnet die Übersicht aller Transaktionen eines Benutzers.
+ */
 void hauptmenue_adm::on_btn_transaktionsliste_clicked()
 {
     transaktionsliste tliste;

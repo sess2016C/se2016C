@@ -1,14 +1,12 @@
 #include "haushaltsverwaltung.h"
 #include "ui_haushaltsverwaltung.h"
 #include <QMessageBox>
-#include "hauptmenue.h"
 #include "hauptmenue_adm.h"
 #include "erstanmeldung_adm.h"
 #include "dbmanager.h"
 #include "global.h"
 #include "newpassword.h"
 
-Hauptmenue *newWindow = 0;
 static const QString path = "haus.db";
 DBManager *db = NULL;
 hauptmenue_adm *newWindowadm = 0;

@@ -8,6 +8,10 @@ namespace Ui {
 class hauptmenue_adm;
 }
 
+/**
+ * @brief The hauptmenue_adm class
+ * Header-Datei für die Klasse "hauptmenue_adm".
+ */
 class hauptmenue_adm : public QMainWindow
 {
     Q_OBJECT

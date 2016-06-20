@@ -9,8 +9,20 @@
 #include "QRegExp"
 #include <QRegExpValidator>
 
+/**
+ * @brief tID
+ * Transaktions-ID
+ */
 int tID = 0;
 
+/**
+ * @brief Erfassen::Erfassen
+ * @param parent
+ * Öffnet den Dialog zum Erfassen von Transaktionen, befüllt
+ * die einzelnen Comboboxen (Kategorie/Zahlart) mit den entsprechenden
+ * Werten und belegt die Betrag-Felder mit einem Validator, um Falscheingaben
+ * vorzubeugen.
+ */
 Erfassen::Erfassen(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Erfassen)
@@ -24,16 +36,31 @@ Erfassen::Erfassen(QWidget *parent) :
     ui->txt_decimal->setValidator(new QRegExpValidator (rx2, this));
 }
 
+/**
+ * @brief Erfassen::~Erfassen
+ * Destruktor der Klasse.
+ */
 Erfassen::~Erfassen()
 {
     delete ui;
 }
 
+/**
+ * @brief Erfassen::on_btn_ErAbbrechen_clicked
+ * Schließt diesen Dialog bei Betätigung.
+ */
 void Erfassen::on_btn_ErAbbrechen_clicked()
 {
     this->hide();
 }
 
+/**
+ * @brief Erfassen::on_btn_ErErfassen_clicked
+ * Liest die einzelnen Benutzereingaben aus den
+ * entsprechenden Formularfeldern und fügt diese
+ * in die Datenbank ein. (Transaktion erfassen)
+ * Danach wird der Dialog geschlossen.
+ */
 void Erfassen::on_btn_ErErfassen_clicked()
 {
     QString d = ui->txt_erf_date->text();
@@ -100,6 +127,12 @@ void Erfassen::on_btn_ErErfassen_clicked()
     this->hide();
 }
 
+/**
+ * @brief Erfassen::updateComboBox
+ * Liest die eingetragenen Kategorien und
+ * Zahlarten aus der Datenbank und initialisiert
+ * die entsprechenden Comboboxen.
+ */
 void Erfassen::updateComboBox() {
     ui->combo_cat->clear();
     ui->combo_paymentOption->clear();
@@ -118,6 +151,14 @@ void Erfassen::updateComboBox() {
     }
 }
 
+/**
+ * @brief Erfassen::loadTransaktion
+ * @param tid
+ * Initialisiert die Formularfelder mit den
+ * bereits vorhandenen Daten aus der Daten-
+ * bank anhand der übergebenen Transaktions-ID.
+ * (Transaktion bearbeiten (Detailansicht))
+ */
 void Erfassen::loadTransaktion(int tid) {
     tID = tid;
     QSqlQuery query;

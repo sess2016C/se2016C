@@ -7,6 +7,10 @@ namespace Ui {
 class Erstanmeldung_adm;
 }
 
+/**
+ * @brief The Erstanmeldung_adm class
+ * Header-Datei für die Klasse "erstanmeldung_adm".
+ */
 class Erstanmeldung_adm : public QDialog
 {
     Q_OBJECT
