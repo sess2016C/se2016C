@@ -20,8 +20,15 @@ Haushaltsverwaltung::Haushaltsverwaltung(QWidget *parent) :
     if(db == NULL) {
         db = new DBManager(path);
     }
-    //erstanmeldung
     //abfrage ob benutzertabelle leer
+    if(QApplication::instance()->arguments().size() > 1) {
+        QString argv = QApplication::instance()->arguments().at(1);
+        if(argv == "clean") {
+            db->cleanTables();
+        } else if(argv == "test") {
+            db->setupTestData();
+        }
+    }
     if(db->isEmpty()) {
         //erstanmeldung
         erstanmeldung();

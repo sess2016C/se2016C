@@ -44,7 +44,7 @@
       <string>Tragen Sie hier ihre Email ein</string>
      </property>
      <property name="text">
-      <string>test@test.de</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLineEdit" name="txt_Passwort">
@@ -57,7 +57,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>1234</string>
+      <string/>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>

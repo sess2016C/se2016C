@@ -27,7 +27,7 @@
    <widget class="QPushButton" name="btn_Bezahlart">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>300</x>
       <y>10</y>
       <width>91</width>
       <height>71</height>
@@ -40,7 +40,8 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wählen Sie ihre bevorzugten Zahlungsarten aus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
-     <string>Bezahlart</string>
+     <string>Bezahlarten
+festlegen</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -59,7 +60,7 @@
    <widget class="QPushButton" name="btn_Abrechnung">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>200</x>
       <y>10</y>
       <width>91</width>
       <height>71</height>
@@ -78,9 +79,9 @@
    <widget class="QPushButton" name="btn_Benutzerdaten">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>400</x>
       <y>10</y>
-      <width>151</width>
+      <width>121</width>
       <height>71</height>
      </rect>
     </property>
@@ -88,7 +89,8 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
-     <string>Benutzerdaten ändern</string>
+     <string>Benutzerdaten 
+ändern</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_Abmelden">
@@ -126,7 +128,8 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pflegen Sie Ein- bzw. Ausgaben in das System ein&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
-     <string>Erfassen</string>
+     <string>Transaktion
+erfassen</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_benutzer_im_minus">
@@ -145,9 +148,9 @@
    <widget class="QPushButton" name="btn_Benutzerverwaltung">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>530</x>
       <y>10</y>
-      <width>131</width>
+      <width>111</width>
       <height>71</height>
      </rect>
     </property>
@@ -161,9 +164,9 @@
    <widget class="QPushButton" name="btn_Kategorieverwaltung">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>650</x>
       <y>10</y>
-      <width>161</width>
+      <width>111</width>
       <height>71</height>
      </rect>
     </property>
@@ -182,6 +185,20 @@
       <width>171</width>
       <height>331</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_transaktionsliste">
+    <property name="geometry">
+     <rect>
+      <x>94</x>
+      <y>10</y>
+      <width>101</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Transaktionen
+anzeigen</string>
     </property>
    </widget>
   </widget>

@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     zahlungsart.cpp \
     kategorie.cpp \
     benutzer.cpp \
-    administrator.cpp
+    administrator.cpp \
+    transaktionsliste.cpp
 
 HEADERS  += haushaltsverwaltung.h \
     hauptmenue.h \
@@ -48,7 +49,8 @@ HEADERS  += haushaltsverwaltung.h \
     zahlungsart.h \
     kategorie.h \
     benutzer.h \
-    administrator.h
+    administrator.h \
+    transaktionsliste.h
 
 FORMS    += haushaltsverwaltung.ui \
     hauptmenue.ui \
@@ -60,4 +62,5 @@ FORMS    += haushaltsverwaltung.ui \
     hauptmenue_adm.ui \
     kategorieverwaltung.ui \
     erstanmeldung_adm.ui \
-    newpassword.ui
+    newpassword.ui \
+    transaktionsliste.ui

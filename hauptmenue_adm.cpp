@@ -8,6 +8,7 @@
 #include "bezahlart.h"
 #include "benutzerdaten.h"
 #include "global.h"
+#include "transaktionsliste.h"
 #include <QSqlQuery>
 
 Haushaltsverwaltung *newHaupmenuWindowAdm = 0;
@@ -36,12 +37,15 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
         query.prepare("SELECT bID, sum(betrag) FROM Transaktion WHERE bid != (:bid) GROUP BY bID");
         query.bindValue(":bid", benutzer_akt->getUID());
         int count = getTableRowCount(query);
+        negativ_benutzers->setRowCount(count);
+        count = 0;
         if(query.exec()) {
-            negativ_benutzers->setRowCount(count);
             int row = 0;
             while(query.next()) {
                 int bid = query.value(0).toInt();
                 qint64 saldo = query.value(1).toLongLong();
+                if(saldo >= 0) { continue; }
+                count++;
                 QSqlQuery getEmail;
                 getEmail.prepare("SELECT email FROM Benutzer WHERE bid = (:bid)");
                 getEmail.bindValue(":bid", bid);
@@ -53,6 +57,7 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
                 row++;
             }
         }
+        negativ_benutzers->setRowCount(count);
     }
     // Transaktionstabelle
     tableAdm = ui->tbl_Transaktionen;
@@ -162,7 +167,7 @@ void hauptmenue_adm::updateTable(int rows) {
                 zid_query.next();
                 zID = zid_query.value(0).toString();
             } else {
-                zID = "No Option defined";
+                zID = "";
             }
             tableAdm->setItem(table_row,0, new QTableWidgetItem(datum));
             tableAdm->setItem(table_row,1, new QTableWidgetItem(betrag));
@@ -237,5 +242,13 @@ void hauptmenue_adm::handleButton() {
     erfassen.setModal(true);
     erfassen.loadTransaktion(tid);
     erfassen.exec();
+    updateTable(10);
+}
+
+void hauptmenue_adm::on_btn_transaktionsliste_clicked()
+{
+    transaktionsliste tliste;
+    tliste.setModal(true);
+    tliste.exec();
     updateTable(10);
 }

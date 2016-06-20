@@ -37,6 +37,8 @@ private slots:
 
     void handleButton();
 
+    void on_btn_transaktionsliste_clicked();
+
 private:
     Ui::hauptmenue_adm *ui;
     void updateTable(int rows);

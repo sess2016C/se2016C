@@ -281,3 +281,70 @@ QString DBManager::getCategoryText(int kid) {
     query.next();
     return query.value(0).toString();
 }
+
+bool DBManager::cleanTables(){
+    QSqlQuery delTrans;
+    delTrans.prepare("DELETE FROM Transaktion");
+    QSqlQuery delUser;
+    delUser.prepare("DELETE FROM Benutzer");
+    QSqlQuery delCategory;
+    delCategory.prepare("DELETE FROM Kategorie");
+    QSqlQuery delPayment;
+    delPayment.prepare("DELETE FROM Zahlart");
+    return delCategory.exec() && delPayment.exec() && delTrans.exec() && delUser.exec();
+}
+
+void DBManager::setupTestData(){
+    QSqlQuery addAdmin;
+    addAdmin.prepare("INSERT INTO Benutzer (bid, email, pwd, vname, name, administrator, geb) VALUES (1, 'rd@hs.aa', 'RD', 'Roland', 'Dietrich', 0, '2000-01-01')");
+    if(addAdmin.exec()) {
+
+    } else {
+        qDebug() << addAdmin.lastError();
+    }
+    QString gehalt = "Gehaltseingang";
+    db->addCategory(gehalt);
+    QString lebensmittel = "Lebensmittel";
+    db->addCategory(lebensmittel);
+    QString freizeit = "Freizeit";
+    db->addCategory(freizeit);
+
+    QString email = "km@hs.aa";
+    QString n = "Musterfrau";
+    QString v = "Klara";
+    QString date = "2000-01-01";
+    db->addbenutzer(email, n, v, date);
+    email = "mm@hs.aa";
+    n = "Mustersohn";
+    v = "Max";
+    db->addbenutzer(email, n, v, date);
+
+    QString p = "Bar";
+    db->addPayment(p, 1);
+    p = "Überweisung";
+    db->addPayment(p, 2);
+    p = "Kreditkarte";
+    db->addPayment(p, 3);
+                                                //kid, bid, zid
+    QString empty = "";
+    QString quelle = "C&A";
+    db->addTransaction(1,empty, 200 ,date, quelle, 1, 1, 1);
+    quelle = "Kik";
+    db->addTransaction(2,empty, 300 ,date, quelle, 2, 1, 1);
+    quelle = "Müller";
+    db->addTransaction(3,empty, 150 ,date, quelle, 1, 2, 2);
+    quelle = "Schlecker";
+    db->addTransaction(4,empty, 550 ,date, quelle, 2, 2, 2);
+    quelle = "Edeka";
+    db->addTransaction(5,empty, 50  ,date, quelle, 3, 3, 3);
+    quelle = "Penny";
+    db->addTransaction(6,empty, 160 ,date, quelle, 3, 3, 3);
+    quelle = "Lidl";
+    db->addTransaction(7,empty, 1980,date, quelle, 3, 1, 1);
+    quelle = "Aldi";
+    db->addTransaction(8,empty, 1670,date, quelle, 3, 2, 2);
+    quelle = "Rewe";
+    db->addTransaction(9,empty, 120, date, quelle, 3, 3, 3);
+    quelle = "Kaufland";
+    db->addTransaction(10,empty, 10 ,date, quelle, 3, 1, 1);
+}

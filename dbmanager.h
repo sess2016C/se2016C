@@ -15,6 +15,8 @@ public:
     int connectbenutzer(QString &email, QString &pw);
     bool isOpen();
     bool isEmpty(); //keine Benutzer vorhanden
+    bool cleanTables();
+    void setupTestData();
     //einfach zu loginscreen zurueck?
     void disconnectbenutzer();
     bool addCategory(QString &category);

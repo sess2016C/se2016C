@@ -8,3 +8,5 @@
 
 extern benutzer *benutzer_akt;
 extern DBManager *db;
+extern int argc_g;
+extern char *argv_g[];
