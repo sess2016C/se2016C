@@ -35,9 +35,12 @@ private slots:
 
     void on_btn_Abrechnung_clicked();
 
+    void handleButton();
+
 private:
     Ui::hauptmenue_adm *ui;
     void updateTable(int rows);
+
 };
 
 #endif // HAUPTMENUE_ADM_H

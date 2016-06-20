@@ -13,6 +13,7 @@
 Haushaltsverwaltung *newHaupmenuWindowAdm = 0;
 QTableWidget *tableAdm;
 QTableWidget *negativ_users;
+QList <int> *transaktionen; //hier werden transaktionsids der angezeigten transaktionen gespeichert
 
 hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     QMainWindow(parent),
@@ -59,12 +60,7 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     tableAdm->horizontalHeader()->setStretchLastSection(true);
     tableAdm->setRowCount(10);
     tableAdm->setColumnCount(6);
-    tableAdm->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Datum")));
-    tableAdm->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("Betrag")));
-    tableAdm->setHorizontalHeaderItem(2, new QTableWidgetItem(QString("Kategorie")));
-    tableAdm->setHorizontalHeaderItem(3, new QTableWidgetItem(QString("Quelle")));
-    tableAdm->setHorizontalHeaderItem(4, new QTableWidgetItem(QString("Zahlungsart")));
-    tableAdm->setHorizontalHeaderItem(5, new QTableWidgetItem(QString("")));
+
 
     updateTable(10);
 }
@@ -121,20 +117,29 @@ void hauptmenue_adm::on_btn_Benutzerdaten_clicked()
 void hauptmenue_adm::updateTable(int rows) {
     tableAdm->clear();
 
+    tableAdm->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Datum")));
+    tableAdm->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("Betrag")));
+    tableAdm->setHorizontalHeaderItem(2, new QTableWidgetItem(QString("Kategorie")));
+    tableAdm->setHorizontalHeaderItem(3, new QTableWidgetItem(QString("Quelle")));
+    tableAdm->setHorizontalHeaderItem(4, new QTableWidgetItem(QString("Zahlungsart")));
+    tableAdm->setHorizontalHeaderItem(5, new QTableWidgetItem(QString("")));
+
     QSqlQuery query;
     query.prepare("SELECT * FROM Transaktion WHERE bID = (:bid) ORDER BY date(datum) DESC Limit (:lim)");
     query.bindValue(":bid", user->getUID());
     query.bindValue(":lim", QString::number(rows));
     if(query.exec()) {
         int table_row = 0;
+        transaktionen = new QList<int>;
         while(query.next()) {
+            transaktionen->append(query.value(0).toInt());
             QString datum = query.value(2).toString();
             datum = convertDate(datum);
             QString betrag = query.value(1).toString();
             qint64 betr = betrag.toLongLong();
             bool einnahme = true;
             if(betr < 0) { einnahme = false; }
-            betrag = QString::number(betr / 100) + "," + QString::number(betr / 10 % 10) + QString::number(betr % 10) + "€";
+            betrag = convertNumberToSaldo(betr);
             QString kID = query.value(5).toString();
             QString quelle = query.value(4).toString();
             QString zID = query.value(7).toString();
@@ -170,7 +175,10 @@ void hauptmenue_adm::updateTable(int rows) {
             tableAdm->setItem(table_row,2, new QTableWidgetItem(kID));
             tableAdm->setItem(table_row,3, new QTableWidgetItem(quelle));
             tableAdm->setItem(table_row,4, new QTableWidgetItem(zID));
-            tableAdm->setCellWidget(table_row, 5, new QPushButton(QString("Details") ));
+            QPushButton *btn = new QPushButton("Details");
+            btn->setObjectName(QString::number(table_row));
+            tableAdm->setCellWidget(table_row, 5, btn ); //how to programm these buttons
+            connect(btn, SIGNAL (released()), this, SLOT (handleButton()));
             table_row++;
         }
     }
@@ -220,5 +228,14 @@ qint64 hauptmenue_adm::getSaldo(int userID) {
 
 //convert qin64 to saldo string
 QString hauptmenue_adm::convertNumberToSaldo(qint64 number) {
-    return QString::number(number / 100) + "," + QString::number(number / 10 % 10) + QString::number(number % 10) + " €";
+    return QString::number(number / 100) + "," + QString::number(abs(number / 10 % 10)) + QString::number(abs(number % 10)) + " €";
+}
+
+void hauptmenue_adm::handleButton() {
+    int tid = transaktionen->at(((QPushButton*)sender())->objectName().toInt());
+    Erfassen erfassen;
+    erfassen.setModal(true);
+    erfassen.loadTransaktion(tid);
+    erfassen.exec();
+    updateTable(10);
 }

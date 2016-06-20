@@ -5,12 +5,14 @@
 #include "QDebug"
 #include "QString"
 #include "QMessageBox"
+#include <QSqlQuery>
 
 Benutzerverwaltung::Benutzerverwaltung(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Benutzerverwaltung)
 {
     ui->setupUi(this);
+    updateTable();
 }
 
 Benutzerverwaltung::~Benutzerverwaltung()
@@ -36,37 +38,42 @@ void Benutzerverwaltung::on_btn_UserAnlegen_clicked()
     } else {
         if(db->addUser(email, name, vname, geb)) {
             qDebug() << "user added";
+            QMessageBox msgBoxEr;
+            msgBoxEr.setText("Nutzer erfolgreich angelegt!");
+            msgBoxEr.exec();
         }
 
     }
+    updateTable();
 }
 
 void Benutzerverwaltung::on_btn_UserDel_clicked()
 {
-    QString email = ui->txt_delUserEmail->text();
-    if(email == "") {
-        QMessageBox msgBoxEr;
-        msgBoxEr.setText("Bitte geben Sie eine Emailadresse an!");
-        msgBoxEr.exec();
-        return;
-    }
-    if(email == user->getEmail()) {
-        qDebug() << "cant delete current user because of admin";
-        return;
-    } else if(db->delUser(email)) {
+    QString email = ui->lst_delUser->currentItem()->text();
+    if(db->delUser(email)) {
         qDebug() << "user deleted";
+        updateTable();
     }
 }
 
 void Benutzerverwaltung::on_btn_UserResetPW_clicked() {
-    QString email = ui->txt_UserResetPW->text();
-    if(email == "") {
-        QMessageBox msgBoxEr;
-        msgBoxEr.setText("Bitte geben Sie eine Emailadresse an!");
-        msgBoxEr.exec();
-        return;
-    }
+    QString email = ui->lst_resetUserPW->currentItem()->text();
     if(db->resetPW(email)) {
         qDebug() << "user pw restet";
+        updateTable();
+    }
+}
+
+void Benutzerverwaltung::updateTable() {
+    ui->lst_delUser->clear();
+    ui->lst_resetUserPW->clear();
+    QSqlQuery query;
+    query.prepare("SELECT email FROM Benutzer WHERE bID != (:bid)");
+    query.bindValue(":bid", user->getUID());
+    if(query.exec()) {
+        while(query.next()) {
+            ui->lst_delUser->addItem(query.value(0).toString());
+            ui->lst_resetUserPW->addItem(query.value(0).toString());
+        }
     }
 }

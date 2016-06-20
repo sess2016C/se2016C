@@ -40,6 +40,9 @@ void Abrechnung::on_btn_AbAbbrechen_clicked()
 void Abrechnung::updateTable() {
     abTable->clear();
 
+    abTable->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Bezeichnung")));
+    abTable->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("Saldo")));
+
     QSqlQuery query;
     if(ui->cmb_categories->currentText() == "-- Alle anzeigen --") {
         query.prepare("SELECT sum(betrag), kid FROM Transaktion WHERE datum >= (:date_from) AND datum <= (:date_to) AND bID = (:bid) GROUP BY kid");

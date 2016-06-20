@@ -26,6 +26,7 @@ private slots:
 
 private:
     Ui::Benutzerverwaltung *ui;
+    void updateTable();
 };
 
 #endif // BENUTZERVERWALTUNG_H

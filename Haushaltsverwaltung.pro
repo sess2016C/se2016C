@@ -25,7 +25,10 @@ SOURCES += main.cpp\
     erstanmeldung_adm.cpp \
     dbmanager.cpp \
     user.cpp \
-    newpassword.cpp
+    newpassword.cpp \
+    transaktion.cpp \
+    zahlungsart.cpp \
+    kategorie.cpp
 
 HEADERS  += haushaltsverwaltung.h \
     hauptmenue.h \
@@ -40,7 +43,10 @@ HEADERS  += haushaltsverwaltung.h \
     dbmanager.h \
     global.h \
     user.h \
-    newpassword.h
+    newpassword.h \
+    transaktion.h \
+    zahlungsart.h \
+    kategorie.h
 
 FORMS    += haushaltsverwaltung.ui \
     hauptmenue.ui \

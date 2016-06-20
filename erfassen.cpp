@@ -9,6 +9,8 @@
 #include "QRegExp"
 #include <QRegExpValidator>
 
+int tID = 0;
+
 Erfassen::Erfassen(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Erfassen)
@@ -52,6 +54,12 @@ void Erfassen::on_btn_ErErfassen_clicked()
     QString amounttxt = amount_txt + amount_decimal;
     qint64 amount = amounttxt.toLongLong();
     QString cat = ui->combo_cat->currentText();
+    if(cat == "") {
+        QMessageBox msgBoxEr;
+        msgBoxEr.setText("Erfassen Sie zuerst eine Kategorie!");
+        msgBoxEr.exec();
+        return;
+    }
     QString source = ui->txt_erf_source->text();
     QString payment = ui->combo_paymentOption->currentText();
     QString desc = ui->txt_erf_description->toPlainText();
@@ -81,8 +89,8 @@ void Erfassen::on_btn_ErErfassen_clicked()
     //check for einnahme or ausgabe
     if(!einnahme) { amount *= -1; }
     //got all nessecary data
-    if(db->addTransaction(desc, amount, date, source, catID, bID, zID)) {
-        qDebug() << "transaction added";
+    if(db->addTransaction(tID, desc, amount, date, source, catID, bID, zID)) {
+        qDebug() << "transaction saved";
     }
     else {
         qDebug() << "something went wrong";
@@ -93,6 +101,8 @@ void Erfassen::on_btn_ErErfassen_clicked()
 }
 
 void Erfassen::updateComboBox() {
+    ui->combo_cat->clear();
+    ui->combo_paymentOption->clear();
     QSqlQuery query;
     query.prepare("SELECT bez FROM Kategorie");
     query.exec();
@@ -106,4 +116,40 @@ void Erfassen::updateComboBox() {
     while(query.next()) {
         ui->combo_paymentOption->addItem(query.value(0).toString());
     }
+}
+
+void Erfassen::loadTransaktion(int tid) {
+    tID = tid;
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Transaktion WHERE tid = (:tid)");
+    query.bindValue(":tid", tid);
+    query.exec();
+    query.next();
+    QString d = query.value(2).toString();
+    QString da = hauptmenue_adm::convertDate(d);
+    QDate date = QDate::fromString(da, "DD.MM.YYYY");
+    ui->txt_erf_date->setDate(date);
+    qint64 amount = query.value(1).toLongLong() / 100;
+    int dec1 = query.value(1).toLongLong() / 10 % 10;
+    int dec2 = query.value(1).toLongLong() % 10;
+    if(amount < 0) {
+        ui->txt_erf_amount->setText(QString::number(amount * -1));
+    }
+    else {
+        ui->txt_erf_amount->setText(QString::number(amount));
+    }
+    ui->txt_decimal->setText(QString::number(dec1) + QString::number(dec2));
+    if(amount < 0) {
+        ui->rdbtn_ausgabe->setChecked(true);
+        ui->rdbtn_einnahme->setChecked(false);
+    }
+    updateComboBox();
+    QString category = db->getCategoryText(query.value(5).toInt());
+    int index = ui->combo_cat->findText(category);
+    ui->combo_cat->setCurrentIndex(index);
+    ui->txt_erf_source->setText(query.value(4).toString());
+    ui->txt_erf_description->setText(query.value(3).toString());
+    QString payment = db->getPaymentText(query.value(7).toInt());
+    index = ui->combo_paymentOption->findText(payment);
+    ui->combo_paymentOption->setCurrentIndex(index);
 }

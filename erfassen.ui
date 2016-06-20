@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Transaktion erfassen</string>
+   <string>Transaktion</string>
   </property>
   <widget class="QPushButton" name="btn_ErErfassen">
    <property name="geometry">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Erfassen</string>
+    <string>Speichern</string>
    </property>
   </widget>
   <widget class="QFrame" name="frame">

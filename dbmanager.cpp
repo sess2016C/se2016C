@@ -162,27 +162,46 @@ bool DBManager::delCat(QString &category){
     return false;
 }
 
-bool DBManager::addTransaction(QString &beschr, qint64 betr, QString &date, QString &quelle, int kID, int bID, int zID) {
+bool DBManager::addTransaction(int tID, QString &beschr, qint64 betr, QString &date, QString &quelle, int kID, int bID, int zID) {
     QSqlQuery query;
-    query.prepare("SELECT IFNULL(MAX(tID), 0) FROM Transaktion");
+    query.prepare("SELECT * FROM Transaktion WHERE tid = (:tid)");
+    query.bindValue(":tid", tID);
     query.exec();
-    query.next();
-    int count = query.value(0).toInt();
+    if(query.next()) {
+        query.prepare("UPDATE Transaktion SET betrag = (:betrag), datum = (:datum), beschr = (:beschr), quelle = (:quelle), kID = (:kid), zID = (:zid) WHERE tid = (:tid)");
+        query.bindValue(":betrag", betr);
+        query.bindValue(":datum", date);
+        query.bindValue(":beschr", beschr);
+        query.bindValue(":quelle", quelle);
+        query.bindValue(":kid", kID);
+        query.bindValue(":zid", zID);
+        query.bindValue(":tid", tID);
+        if(query.exec()) {
+            return true;
+        }
+        return false;
+    } else {
+        query.prepare("SELECT IFNULL(MAX(tID), 0) FROM Transaktion");
+        query.exec();
+        query.next();
+        int count = query.value(0).toInt();
 
-    query.prepare("INSERT INTO Transaktion(tID, betrag, datum, beschr, quelle, kID, bID, zID) VALUES (:tID, :betr, :date, :beschr, :quelle, :kID, :bID, :zID)");
-    query.bindValue(":tID", count + 1);
-    query.bindValue(":beschr", beschr);
-    query.bindValue(":betr", betr);
-    query.bindValue(":date", date);
-    query.bindValue(":quelle", quelle);
-    query.bindValue(":kID", kID);
-    query.bindValue(":bID", bID);
-    query.bindValue(":zID", zID);
-    if(query.exec()) {
-        return true;
+        query.prepare("INSERT INTO Transaktion(tID, betrag, datum, beschr, quelle, kID, bID, zID) VALUES (:tID, :betr, :date, :beschr, :quelle, :kID, :bID, :zID)");
+        query.bindValue(":tID", count + 1);
+        query.bindValue(":beschr", beschr);
+        query.bindValue(":betr", betr);
+        query.bindValue(":date", date);
+        query.bindValue(":quelle", quelle);
+        query.bindValue(":kID", kID);
+        query.bindValue(":bID", bID);
+        query.bindValue(":zID", zID);
+        if(query.exec()) {
+            return true;
+        }
+        qDebug() << query.lastError();
+        return false;
     }
-    qDebug() << query.lastError();
-    return false;
+
 }
 
 bool DBManager::changeUserData(QString &name, QString &vname, QString &pwd, QString &geb) {
@@ -242,4 +261,23 @@ bool DBManager::delPayment(QString &pay, int uID) {
     query.bindValue(":uID", uID);
     if(query.exec()) { return true; }
     return false;
+}
+
+QString DBManager::getPaymentText(int zid) {
+    QSqlQuery query;
+    query.prepare("SELECT bez FROM Zahlart WHERE zID = (:zid) AND bid = (:bid)");
+    query.bindValue(":zid", zid);
+    query.bindValue(":bid", user->getUID());
+    query.exec();
+    query.next();
+    return query.value(0).toString();
+}
+
+QString DBManager::getCategoryText(int kid) {
+    QSqlQuery query;
+    query.prepare("SELECT bez FROM Kategorie WHERE kid = (:kid)");
+    query.bindValue(":kid", kid);
+    query.exec();
+    query.next();
+    return query.value(0).toString();
 }

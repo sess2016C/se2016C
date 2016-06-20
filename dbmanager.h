@@ -22,10 +22,12 @@ public:
     bool addUser(QString &email, QString &name, QString & vname,QString &geb);
     bool delUser(QString &email);
     bool delCat(QString &category);
+    QString getPaymentText(int tid);
+    QString getCategoryText(int kid);
 
     //----METHODEN FUER GUI-ANZEIGE----
     //englisch oder deutsch? qulle & zahlart können aber müssen nicht vorhanden sein, evtl. auffuellen mit null
-    bool addTransaction(QString &beschr, qint64 betr, QString &date, QString &quelle, int kID, int bID, int zID);
+    bool addTransaction(int tID, QString &beschr, qint64 betr, QString &date, QString &quelle, int kID, int bID, int zID);
     bool showAccount();
     bool addPayment(QString &pay, int uID);
     bool delPayment(QString &pay, int uID);

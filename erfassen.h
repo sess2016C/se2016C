@@ -14,6 +14,8 @@ class Erfassen : public QDialog
 public:
     explicit Erfassen(QWidget *parent = 0);
     ~Erfassen();
+    void loadTransaktion(int tid);
+    int tID;
 
 private slots:
     void on_btn_ErAbbrechen_clicked();
