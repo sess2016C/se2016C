@@ -47,7 +47,7 @@
       <string>Vorname:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="txt_userName">
+    <widget class="QLineEdit" name="txt_benutzerName">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -75,7 +75,7 @@
       <string>Geburtsdatum:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="txt_userVname">
+    <widget class="QLineEdit" name="txt_benutzerVname">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -85,7 +85,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QDateEdit" name="txt_userGeb">
+    <widget class="QDateEdit" name="txt_benutzerGeb">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -131,7 +131,7 @@
       <string>Email:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="txt_userEmail">
+    <widget class="QLineEdit" name="txt_benutzerEmail">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -141,7 +141,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_UserAnlegen">
+    <widget class="QPushButton" name="btn_benutzerAnlegen">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -159,7 +159,7 @@
     <attribute name="title">
      <string>Benutzer löschen</string>
     </attribute>
-    <widget class="QPushButton" name="btn_UserDel">
+    <widget class="QPushButton" name="btn_benutzerDel">
      <property name="geometry">
       <rect>
        <x>280</x>
@@ -172,7 +172,7 @@
       <string>Löschen</string>
      </property>
     </widget>
-    <widget class="QListWidget" name="lst_delUser">
+    <widget class="QListWidget" name="lst_delbenutzer">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -187,7 +187,7 @@
     <attribute name="title">
      <string>Passwort zurücksetzen</string>
     </attribute>
-    <widget class="QPushButton" name="btn_UserResetPW">
+    <widget class="QPushButton" name="btn_benutzerResetPW">
      <property name="geometry">
       <rect>
        <x>280</x>
@@ -200,7 +200,7 @@
       <string>Zurücksetzten</string>
      </property>
     </widget>
-    <widget class="QListWidget" name="lst_resetUserPW">
+    <widget class="QListWidget" name="lst_resetbenutzerPW">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -227,15 +227,15 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>txt_userEmail</tabstop>
-  <tabstop>txt_userVname</tabstop>
-  <tabstop>txt_userName</tabstop>
-  <tabstop>txt_userGeb</tabstop>
-  <tabstop>btn_UserAnlegen</tabstop>
+  <tabstop>txt_benutzerEmail</tabstop>
+  <tabstop>txt_benutzerVname</tabstop>
+  <tabstop>txt_benutzerName</tabstop>
+  <tabstop>txt_benutzerGeb</tabstop>
+  <tabstop>btn_benutzerAnlegen</tabstop>
   <tabstop>btn_BvAbbrechen</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>btn_UserDel</tabstop>
-  <tabstop>btn_UserResetPW</tabstop>
+  <tabstop>btn_benutzerDel</tabstop>
+  <tabstop>btn_benutzerResetPW</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -1,8 +1,8 @@
 #ifndef TRANSAKTION_H
 #define TRANSAKTION_H
-#include "global.h"
 #include "kategorie.h"
 #include "zahlungsart.h"
+//#include "global.h"
 #include <QString>
 
 class Transaktion
@@ -25,6 +25,7 @@ public:
     bool setZahlungsart(zahlungsart zart);
 
 private:
+    int id;
     QString beschreibung;
     int betrag;
     QString datum;

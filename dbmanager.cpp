@@ -34,7 +34,7 @@ bool DBManager::isEmpty() {
     return false;
 }
 
-int DBManager::connectUser(QString &email, QString &pwd) { //0 = fehlgeschlagen, 1 = okey, 2 = anmeldung mit standardpass
+int DBManager::connectbenutzer(QString &email, QString &pwd) { //0 = fehlgeschlagen, 1 = okey, 2 = anmeldung mit standardpass
     QSqlQuery query;
     query.prepare("SELECT * FROM Benutzer WHERE email = (:email) AND pwd = (:pwd)");
     query.bindValue(":email", email);
@@ -49,7 +49,7 @@ int DBManager::connectUser(QString &email, QString &pwd) { //0 = fehlgeschlagen,
            QString name = query.value(4).toString();
            QString vname = query.value(5).toString();
            QString pwd = query.value(6).toString();
-           user = new User(bID, admin, email, geb, name, vname, pwd);
+           benutzer_akt = new benutzer(bID, admin, email, geb, name, vname, pwd);
            if(curr_pw == "0000") {//Standardpasswort
                 return 2;
            }
@@ -61,7 +61,7 @@ int DBManager::connectUser(QString &email, QString &pwd) { //0 = fehlgeschlagen,
     return 0;
 }
 
-void DBManager::disconnectUser() {
+void DBManager::disconnectbenutzer() {
     if(m_db.isOpen()) {
         m_db.close();
     }
@@ -100,7 +100,7 @@ bool DBManager::resetPW(QString &email) {
     return false;
 }
 
-bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &geb) {
+bool DBManager::addbenutzer(QString &email, QString &name, QString &vname, QString &geb) {
     QSqlQuery query;
     if(email == "" or name == "" or vname == "" or geb == "") {
         qDebug() << "something was empty";
@@ -111,7 +111,7 @@ bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &
     if(query.exec()) {
         if(query.next()) {
             int bid = query.value(0).toInt();
-            qDebug() << "user already existing: " << bid;
+            qDebug() << "benutzer already existing: " << bid;
             return false; //already existing
         }
     }
@@ -140,14 +140,14 @@ bool DBManager::addUser(QString &email, QString &name, QString &vname, QString &
     return false;
 }
 
-bool DBManager::delUser(QString &email) {
+bool DBManager::delbenutzer(QString &email) {
     QSqlQuery query;
     query.prepare("DELETE FROM Benutzer WHERE email = (:email)");
     query.bindValue(":email", email);
     if(query.exec()) {
         return true;
     }
-    qDebug() << "del User didnt work";
+    qDebug() << "del benutzer didnt work";
     qDebug() << query.lastError();
     return false;
 }
@@ -204,20 +204,20 @@ bool DBManager::addTransaction(int tID, QString &beschr, qint64 betr, QString &d
 
 }
 
-bool DBManager::changeUserData(QString &name, QString &vname, QString &pwd, QString &geb) {
+bool DBManager::changebenutzerData(QString &name, QString &vname, QString &pwd, QString &geb) {
     QSqlQuery query;
     query.prepare("UPDATE Benutzer SET geb = (:geb), name = (:name), vname = (:vname), pwd = (:pwd) WHERE bID = (:bID)");
     query.bindValue(":geb", geb);
     query.bindValue(":name", name);
     query.bindValue(":vname", vname);
     query.bindValue(":pwd", pwd);
-    query.bindValue(":bID", user->getUID());
+    query.bindValue(":bID", benutzer_akt->getUID());
     if(query.exec()) {
-        qDebug() << "updated user";
-        user->setGeb(geb);
-        user->setName(name);
-        user->setVname(vname);
-        user->setPwd(pwd);
+        qDebug() << "updated benutzer";
+        benutzer_akt->setGeb(geb);
+        benutzer_akt->setName(name);
+        benutzer_akt->setVname(vname);
+        benutzer_akt->setPwd(pwd);
         return true;
     }
     qDebug() << query.lastError();
@@ -233,7 +233,7 @@ bool DBManager::addPayment(QString &pay, int uID) {
     query.exec();
     if(query.next()) {
         return false;
-        //already exists for this user
+        //already exists for this benutzer
     }
 
     //get new zID
@@ -267,7 +267,7 @@ QString DBManager::getPaymentText(int zid) {
     QSqlQuery query;
     query.prepare("SELECT bez FROM Zahlart WHERE zID = (:zid) AND bid = (:bid)");
     query.bindValue(":zid", zid);
-    query.bindValue(":bid", user->getUID());
+    query.bindValue(":bid", benutzer_akt->getUID());
     query.exec();
     query.next();
     return query.value(0).toString();

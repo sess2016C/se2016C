@@ -19,11 +19,11 @@ void NewPassword::on_btn_NpAendern_clicked()
 {
     QString pw1 = ui->txt_NpPasswort1->text();
     QString pw2 = ui->txt_NpPasswort2->text();
-    QString uName = user->getName();
-    QString uVname = user->getVname();
-    QString ugeb = user->getGeb();
+    QString uName = benutzer_akt->getName();
+    QString uVname = benutzer_akt->getVname();
+    QString ugeb = benutzer_akt->getGeb();
     if(pw1 == pw2) {
-        db->changeUserData(uName, uVname, pw1, ugeb);
+        db->changebenutzerData(uName, uVname, pw1, ugeb);
         this->hide();
     } else {
         //TODO keine übereinstimmenden Passwörter

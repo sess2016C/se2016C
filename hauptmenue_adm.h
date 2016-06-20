@@ -17,7 +17,7 @@ public:
     ~hauptmenue_adm();
     static QString convertDate(QString &date);
     static int getTableRowCount(QSqlQuery query);
-    static qint64 getSaldo(int userID);
+    static qint64 getSaldo(int benutzerID);
     static QString convertNumberToSaldo(qint64 number);
 
 private slots:

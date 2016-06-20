@@ -64,7 +64,7 @@ void Erfassen::on_btn_ErErfassen_clicked()
     QString payment = ui->combo_paymentOption->currentText();
     QString desc = ui->txt_erf_description->toPlainText();
     bool einnahme = ui->rdbtn_einnahme->isChecked();
-    int bID = user->getUID();
+    int bID = benutzer_akt->getUID();
 
     //get Category ID
     int catID;
@@ -110,7 +110,7 @@ void Erfassen::updateComboBox() {
         ui->combo_cat->addItem(query.value(0).toString());
     }
     query.prepare("SELECT bez FROM Zahlart WHERE bid = (:bid)");
-    query.bindValue(":bid", user->getUID());
+    query.bindValue(":bid", benutzer_akt->getUID());
     query.exec();
     ui->combo_paymentOption->addItem("");
     while(query.next()) {

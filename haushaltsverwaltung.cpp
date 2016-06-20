@@ -64,10 +64,11 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
         //qDebug() << "NOT connected";
         return; //TODO MSGBox mit retry
     }
-    int ret = db->connectUser(benutzername, passwort);
+    int ret = db->connectbenutzer(benutzername, passwort);
     if(ret == 1) {
         this->hide();
-        qDebug() << user->isAdmin();
+
+        qDebug() << benutzer_akt->isAdmin();
         newWindowadm = new hauptmenue_adm();
         newWindowadm->show();
 

@@ -57,7 +57,7 @@
     <string>Vorname:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txt_userDataVname">
+  <widget class="QLineEdit" name="txt_benutzerDataVname">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -70,7 +70,7 @@
     <number>30</number>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txt_userDataName">
+  <widget class="QLineEdit" name="txt_benutzerDataName">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -119,7 +119,7 @@
     <string>Geburtsdatum:</string>
    </property>
   </widget>
-  <widget class="QDateEdit" name="txt_userDataGeb">
+  <widget class="QDateEdit" name="txt_benutzerDataGeb">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -131,9 +131,9 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>txt_userDataVname</tabstop>
-  <tabstop>txt_userDataName</tabstop>
-  <tabstop>txt_userDataGeb</tabstop>
+  <tabstop>txt_benutzerDataVname</tabstop>
+  <tabstop>txt_benutzerDataName</tabstop>
+  <tabstop>txt_benutzerDataGeb</tabstop>
   <tabstop>btn_NuSpeichern</tabstop>
   <tabstop>btn_NuAbbrechen</tabstop>
  </tabstops>

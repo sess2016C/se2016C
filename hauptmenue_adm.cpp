@@ -12,7 +12,7 @@
 
 Haushaltsverwaltung *newHaupmenuWindowAdm = 0;
 QTableWidget *tableAdm;
-QTableWidget *negativ_users;
+QTableWidget *negativ_benutzers;
 QList <int> *transaktionen; //hier werden transaktionsids der angezeigten transaktionen gespeichert
 
 hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
@@ -20,24 +20,24 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
     ui(new Ui::hauptmenue_adm)
 {
     ui->setupUi(this);
-    if(!user->isAdmin()) {
+    if(!benutzer_akt->isAdmin()) {
         ui->btn_Benutzerverwaltung->setVisible(false);
         ui->btn_Kategorieverwaltung->setVisible(false);
-        ui->label_user_im_minus->setVisible(false);
-        ui->tbl_negativeUsers->setVisible(false);
+        ui->label_benutzer_im_minus->setVisible(false);
+        ui->tbl_negativebenutzers->setVisible(false);
     } else {
-        //Fill list_user_im_minus
-        negativ_users = ui->tbl_negativeUsers;
-        negativ_users->horizontalHeader()->setStretchLastSection(true);
-        negativ_users->setColumnCount(2);
-        negativ_users->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Benutzer")));
-        negativ_users->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("Saldo")));
+        //Fill list_benutzer_im_minus
+        negativ_benutzers = ui->tbl_negativebenutzers;
+        negativ_benutzers->horizontalHeader()->setStretchLastSection(true);
+        negativ_benutzers->setColumnCount(2);
+        negativ_benutzers->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Benutzer")));
+        negativ_benutzers->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("Saldo")));
         QSqlQuery query;
         query.prepare("SELECT bID, sum(betrag) FROM Transaktion WHERE bid != (:bid) GROUP BY bID");
-        query.bindValue(":bid", user->getUID());
+        query.bindValue(":bid", benutzer_akt->getUID());
         int count = getTableRowCount(query);
         if(query.exec()) {
-            negativ_users->setRowCount(count);
+            negativ_benutzers->setRowCount(count);
             int row = 0;
             while(query.next()) {
                 int bid = query.value(0).toInt();
@@ -47,9 +47,9 @@ hauptmenue_adm::hauptmenue_adm(QWidget *parent) :
                 getEmail.bindValue(":bid", bid);
                 getEmail.exec();
                 getEmail.next();
-                QString user = getEmail.value(0).toString();
-                negativ_users->setItem(row, 0, new QTableWidgetItem(user));
-                negativ_users->setItem(row, 1, new QTableWidgetItem(convertNumberToSaldo(saldo)));
+                QString benutzer = getEmail.value(0).toString();
+                negativ_benutzers->setItem(row, 0, new QTableWidgetItem(benutzer));
+                negativ_benutzers->setItem(row, 1, new QTableWidgetItem(convertNumberToSaldo(saldo)));
                 row++;
             }
         }
@@ -126,7 +126,7 @@ void hauptmenue_adm::updateTable(int rows) {
 
     QSqlQuery query;
     query.prepare("SELECT * FROM Transaktion WHERE bID = (:bid) ORDER BY date(datum) DESC Limit (:lim)");
-    query.bindValue(":bid", user->getUID());
+    query.bindValue(":bid", benutzer_akt->getUID());
     query.bindValue(":lim", QString::number(rows));
     if(query.exec()) {
         int table_row = 0;
@@ -157,7 +157,7 @@ void hauptmenue_adm::updateTable(int rows) {
                 QSqlQuery zid_query;
                 zid_query.prepare("SELECT bez FROM Zahlart WHERE zID = (:zid) AND bID = (:bid)");
                 zid_query.bindValue(":zid", zID);
-                zid_query.bindValue(":bid", user->getUID());
+                zid_query.bindValue(":bid", benutzer_akt->getUID());
                 zid_query.exec();
                 zid_query.next();
                 zID = zid_query.value(0).toString();
@@ -213,10 +213,10 @@ int hauptmenue_adm::getTableRowCount(QSqlQuery query) {
     return -1;
 }
 
-qint64 hauptmenue_adm::getSaldo(int userID) {
+qint64 hauptmenue_adm::getSaldo(int benutzerID) {
     QSqlQuery query;
     query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bID = (:bid)");
-    query.bindValue(":bid", userID);
+    query.bindValue(":bid", benutzerID);
     if(query.exec()) {
         if(query.next()) {
             qint64 saldo = query.value(0).toLongLong();

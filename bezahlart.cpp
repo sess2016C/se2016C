@@ -34,7 +34,7 @@ void Bezahlart::on_btn_BeHinzufuegen_clicked()
         msgBoxEr.exec();
         return;
     }
-    if(db->addPayment(bez, user->getUID())) {
+    if(db->addPayment(bez, benutzer_akt->getUID())) {
         qDebug() << "payment added";
         updateList();
     }
@@ -52,7 +52,7 @@ void Bezahlart::on_btn_BeLoeschen_clicked()
     }
     QString bez = ui->list_bezahlart->currentItem()->text();
     if(bez == "") return;
-    if(db->delPayment(bez, user->getUID())) {
+    if(db->delPayment(bez, benutzer_akt->getUID())) {
         updateList();
         qDebug() << "payment deleted";
     }
@@ -64,7 +64,7 @@ void Bezahlart::updateList() {
     ui->list_bezahlart->clear();
     QSqlQuery query;
     query.prepare("SELECT bez FROM Zahlart WHERE bid = (:bID)");
-    query.bindValue(":bID", user->getUID());
+    query.bindValue(":bID", benutzer_akt->getUID());
     query.exec();
     while(query.next()) {
         ui->list_bezahlart->addItem(query.value(0).toString());

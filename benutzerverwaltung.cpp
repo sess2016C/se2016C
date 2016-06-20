@@ -25,19 +25,19 @@ void Benutzerverwaltung::on_btn_BvAbbrechen_clicked()
     this->hide();
 }
 
-void Benutzerverwaltung::on_btn_UserAnlegen_clicked()
+void Benutzerverwaltung::on_btn_benutzerAnlegen_clicked()
 {
-    QString email = ui->txt_userEmail->text();
-    QString vname = ui->txt_userVname->text();
-    QString name = ui->txt_userName->text();
-    QString geb = ui->txt_userGeb->text();
+    QString email = ui->txt_benutzerEmail->text();
+    QString vname = ui->txt_benutzerVname->text();
+    QString name = ui->txt_benutzerName->text();
+    QString geb = ui->txt_benutzerGeb->text();
     if(email == "" or vname == "" or name == "" or geb == "") { //TODO talk about required values
         QMessageBox msgBoxEr;
         msgBoxEr.setText("Bitte füllen Sie alle Felder aus!");
         msgBoxEr.exec();
     } else {
-        if(db->addUser(email, name, vname, geb)) {
-            qDebug() << "user added";
+        if(db->addbenutzer(email, name, vname, geb)) {
+            qDebug() << "benutzer added";
             QMessageBox msgBoxEr;
             msgBoxEr.setText("Nutzer erfolgreich angelegt!");
             msgBoxEr.exec();
@@ -47,33 +47,33 @@ void Benutzerverwaltung::on_btn_UserAnlegen_clicked()
     updateTable();
 }
 
-void Benutzerverwaltung::on_btn_UserDel_clicked()
+void Benutzerverwaltung::on_btn_benutzerDel_clicked()
 {
-    QString email = ui->lst_delUser->currentItem()->text();
-    if(db->delUser(email)) {
-        qDebug() << "user deleted";
+    QString email = ui->lst_delbenutzer->currentItem()->text();
+    if(db->delbenutzer(email)) {
+        qDebug() << "benutzer deleted";
         updateTable();
     }
 }
 
-void Benutzerverwaltung::on_btn_UserResetPW_clicked() {
-    QString email = ui->lst_resetUserPW->currentItem()->text();
+void Benutzerverwaltung::on_btn_benutzerResetPW_clicked() {
+    QString email = ui->lst_resetbenutzerPW->currentItem()->text();
     if(db->resetPW(email)) {
-        qDebug() << "user pw restet";
+        qDebug() << "benutzer pw restet";
         updateTable();
     }
 }
 
 void Benutzerverwaltung::updateTable() {
-    ui->lst_delUser->clear();
-    ui->lst_resetUserPW->clear();
+    ui->lst_delbenutzer->clear();
+    ui->lst_resetbenutzerPW->clear();
     QSqlQuery query;
     query.prepare("SELECT email FROM Benutzer WHERE bID != (:bid)");
-    query.bindValue(":bid", user->getUID());
+    query.bindValue(":bid", benutzer_akt->getUID());
     if(query.exec()) {
         while(query.next()) {
-            ui->lst_delUser->addItem(query.value(0).toString());
-            ui->lst_resetUserPW->addItem(query.value(0).toString());
+            ui->lst_delbenutzer->addItem(query.value(0).toString());
+            ui->lst_resetbenutzerPW->addItem(query.value(0).toString());
         }
     }
 }

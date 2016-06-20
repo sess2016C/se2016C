@@ -50,7 +50,7 @@ void Abrechnung::updateTable() {
         query.bindValue(":date_from", hauptmenue_adm::convertDate(date_from));
         QString date_to = ui->date_to->text();
         query.bindValue(":date_to", hauptmenue_adm::convertDate(date_to));
-        query.bindValue(":bid", user->getUID());
+        query.bindValue(":bid", benutzer_akt->getUID());
         int row_count = hauptmenue_adm::getTableRowCount(query);
         abTable->setRowCount(row_count + 1);
         if(query.exec()) {
@@ -80,7 +80,7 @@ void Abrechnung::updateTable() {
             abTable->setItem(count, 0, new QTableWidgetItem("Gesamt: "));
 
             query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bid = (:bid)");
-            query.bindValue(":bid", user->getUID());
+            query.bindValue(":bid", benutzer_akt->getUID());
             query.exec();
             query.next();
             qint64 saldo = query.value(0).toLongLong();
@@ -110,7 +110,7 @@ void Abrechnung::updateTable() {
         QString date_to = ui->date_to->text();
         query.bindValue(":date_to", hauptmenue_adm::convertDate(date_to));
         query.bindValue(":sel_kid", catID);
-        query.bindValue(":bid", user->getUID());
+        query.bindValue(":bid", benutzer_akt->getUID());
         abTable->setRowCount(2); //kategorie und gesamt
         if(query.exec()) {
             if(query.next()) {
@@ -124,9 +124,8 @@ void Abrechnung::updateTable() {
                 }
                 //add gesamt
                 abTable->setItem(1, 0, new QTableWidgetItem("Gesamt: "));
-                qint64 saldo = 0;
                 query.prepare("SELECT sum(betrag) FROM Transaktion WHERE bid = (:bid) AND kid = (:catid)");
-                query.bindValue(":bid", user->getUID());
+                query.bindValue(":bid", benutzer_akt->getUID());
                 query.bindValue(":catid", catID);
                 query.exec();
                 query.next();

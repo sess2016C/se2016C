@@ -30,7 +30,7 @@ void Erstanmeldung_adm::on_btn_EaAnlegen_clicked()
     QString name = ui->txt_EaNachname->text();
     QString vname = ui->txt_EaVorname->text();
     QString geb = ui->txt_EaGeburtsdatum->text();
-    if(db->addUser(email, name, vname, geb)) {
+    if(db->addbenutzer(email, name, vname, geb)) {
         this->hide();
     } else {
         //TODO Fehlerfall

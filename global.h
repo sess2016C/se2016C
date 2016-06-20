@@ -3,8 +3,8 @@
 
 #endif // GLOBAL_H
 
-#include "user.h"
+#include "benutzer.h"
 #include "dbmanager.h"
 
-extern User *user;
+extern benutzer *benutzer_akt;
 extern DBManager *db;

@@ -24,11 +24,12 @@ SOURCES += main.cpp\
     kategorieverwaltung.cpp \
     erstanmeldung_adm.cpp \
     dbmanager.cpp \
-    user.cpp \
     newpassword.cpp \
     transaktion.cpp \
     zahlungsart.cpp \
-    kategorie.cpp
+    kategorie.cpp \
+    benutzer.cpp \
+    administrator.cpp
 
 HEADERS  += haushaltsverwaltung.h \
     hauptmenue.h \
@@ -42,11 +43,12 @@ HEADERS  += haushaltsverwaltung.h \
     erstanmeldung_adm.h \
     dbmanager.h \
     global.h \
-    user.h \
     newpassword.h \
     transaktion.h \
     zahlungsart.h \
-    kategorie.h
+    kategorie.h \
+    benutzer.h \
+    administrator.h
 
 FORMS    += haushaltsverwaltung.ui \
     hauptmenue.ui \
