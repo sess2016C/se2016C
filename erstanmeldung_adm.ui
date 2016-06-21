@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Erstanmeldung Administrator</string>
   </property>
   <widget class="QLineEdit" name="txt_EaEmail">
    <property name="geometry">

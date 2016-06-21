@@ -117,6 +117,7 @@ void Erfassen::on_btn_ErErfassen_clicked()
     if(!einnahme) { amount *= -1; }
     //got all nessecary data
     if(db->addTransaction(tID, desc, amount, date, source, catID, bID, zID)) {
+        tID = 0;
         qDebug() << "transaction saved";
     }
     else {

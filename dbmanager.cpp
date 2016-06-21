@@ -206,6 +206,12 @@ bool DBManager::delCat(QString &category){
     return false;
 }
 
+/**
+ * @brief DBManager::addTransaction
+ * Wenn die übergebene tID einen Eintrag in der Datenbank hat, dann wird diese Transaktion geupdated mit den übergebenen Werten.
+ * Wenn diese Transaktion nicht vorhanden ist, dann wird eine neue Transaktion mit den übergebenen Werten angelegt.
+ * @return True, wenn die Transaktion erfolgreich angelegt wurde, false sonst.
+ */
 bool DBManager::addTransaction(int tID, QString &beschr, qint64 betr, QString &date, QString &quelle, int kID, int bID, int zID) {
     QSqlQuery query;
     query.prepare("SELECT * FROM Transaktion WHERE tid = (:tid)");
