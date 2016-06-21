@@ -7,6 +7,10 @@ namespace Ui {
 class Haushaltsverwaltung;
 }
 
+/**
+ * @brief The Haushaltsverwaltung class
+ * Header-Datei für die Klasse "Haushaltsverwaltung".
+ */
 class Haushaltsverwaltung : public QMainWindow
 {
     Q_OBJECT

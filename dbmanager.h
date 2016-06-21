@@ -5,7 +5,9 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-
+/**
+ * @brief The DBManager class Die Klasse DBManager
+ */
 class DBManager
 {
 public:

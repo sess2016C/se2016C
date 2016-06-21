@@ -7,6 +7,10 @@ namespace Ui {
 class Kategorieverwaltung;
 }
 
+/**
+ * @brief The Kategorieverwaltung class
+ * Header-Datei der Klasse "Kategorieverwaltung".
+ */
 class Kategorieverwaltung : public QDialog
 {
     Q_OBJECT

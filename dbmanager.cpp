@@ -5,6 +5,10 @@
 #include <QDebug>
 #include <QSqlError>
 
+/**
+ * @brief DBManager Konstruktor: Öffnet die Datenbank, die im Pfad angegeben wurde.
+ * @param path Pfad zur Datenbank.
+ */
 DBManager::DBManager(const QString &path)
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
@@ -18,11 +22,18 @@ DBManager::DBManager(const QString &path)
     }
 }
 
-
+/**
+ * @brief isOpen Liefert einen Wert, der beschreibt, ob die Datenbank bereit ist.
+ * @return True wenn Datenbank bereit, false sonst.
+ */
 bool DBManager::isOpen() {
     return m_db.isOpen();
 }
 
+/**
+ * @brief isEmpty Prüft, ob Benutzer in der Datenbank vorhanden sind.
+ * @return True, wenn keine Benutzer vorhanden sind, false sonst.
+ */
 bool DBManager::isEmpty() {
     QSqlQuery query;
     query.prepare("SELECT count(*) FROM Benutzer");
@@ -34,6 +45,12 @@ bool DBManager::isEmpty() {
     return false;
 }
 
+/**
+ * @brief connectbenutzer Meldet einen Benutzer am System an. Weißt außerdem der globalen Variablen "benutzer_akt" ihre Werte zu.
+ * @param email Email des anzumeldenden Benutzers.
+ * @param pw Passwort des anzumeldenden Benutzers.
+ * @return 2 bei Anmeldung mit Standardpasswort, 1 im Erfolgsfall ohne Standardpasswort, 0 bei Fehlschlag
+ */
 int DBManager::connectbenutzer(QString &email, QString &pwd) { //0 = fehlgeschlagen, 1 = okey, 2 = anmeldung mit standardpass
     QSqlQuery query;
     query.prepare("SELECT * FROM Benutzer WHERE email = (:email) AND pwd = (:pwd)");
@@ -61,12 +78,20 @@ int DBManager::connectbenutzer(QString &email, QString &pwd) { //0 = fehlgeschla
     return 0;
 }
 
+/**
+ * @brief disconnectbenutzer Trennt einen Benutzer von der Datenbank.
+ */
 void DBManager::disconnectbenutzer() {
     if(m_db.isOpen()) {
         m_db.close();
     }
 }
 
+/**
+ * @brief addCategory Fügt eine Kategorie in die Datenbank ein
+ * @param category Name der Kategorie.
+ * @return True bei Erfolg, false sonst.
+ */
 bool DBManager::addCategory(QString &category) {
     QSqlQuery query;
     query.prepare("SELECT bez FROM Kategorie WHERE bez = (:cat)"); //Überprüfung, ob Kategorie schon vorhanden
@@ -90,6 +115,11 @@ bool DBManager::addCategory(QString &category) {
     return false;
 }
 
+/**
+ * @brief resetPW Setzt das Passwort eines Benutzers in der Datenbank zurück.
+ * @param email Email des Benutzers, dessen Passwort zurückgesetzt werden soll.
+ * @return True bei Erfolg, false sonst.
+ */
 bool DBManager::resetPW(QString &email) {
     QSqlQuery query;
     query.prepare("UPDATE Benutzer SET pwd = '0000' WHERE email = (:email)");
@@ -100,6 +130,10 @@ bool DBManager::resetPW(QString &email) {
     return false;
 }
 
+/**
+ * @brief addbenutzer Fügt den Benutzer mit den übergebenen Werten in die Datenbank ein.
+ * @return True bei Erfolg, false sonst.
+ */
 bool DBManager::addbenutzer(QString &email, QString &name, QString &vname, QString &geb) {
     QSqlQuery query;
     if(email == "" or name == "" or vname == "" or geb == "") {
@@ -140,6 +174,11 @@ bool DBManager::addbenutzer(QString &email, QString &name, QString &vname, QStri
     return false;
 }
 
+/**
+ * @brief delbenutzer Löscht einen Benutzer aus der Datenbank.
+ * @param email Email des Benutzers, der gelöscht wird.
+ * @return True bei Erfolg, false sonst.
+ */
 bool DBManager::delbenutzer(QString &email) {
     QSqlQuery query;
     query.prepare("DELETE FROM Benutzer WHERE email = (:email)");
@@ -152,6 +191,11 @@ bool DBManager::delbenutzer(QString &email) {
     return false;
 }
 
+/**
+ * @brief delCat Entfernt eine Kategorie aus der Datenbank.
+ * @param category Name der zu löschenden Kategorie.
+ * @return True bei Erfolg, false sonst.
+ */
 bool DBManager::delCat(QString &category){
     QSqlQuery query;
     query.prepare("DELETE FROM Kategorie WHERE bez = (:cat)");
@@ -254,6 +298,10 @@ bool DBManager::addPayment(QString &pay, int uID) {
     return false;
 }
 
+/**
+ * @brief changebenutzerData Ändern die Benutzerdaten des ausführenden Benutzers auf die angegebenen Werte.
+ * @return True bei Erfolg, false sonst.
+ */
 bool DBManager::delPayment(QString &pay, int uID) {
     QSqlQuery query;
     query.prepare("DELETE FROM Zahlart WHERE bez = (:pay) AND bID = (:uID)");
@@ -263,6 +311,11 @@ bool DBManager::delPayment(QString &pay, int uID) {
     return false;
 }
 
+/**
+ * @brief getPaymentText Sucht zu einer Zahlungsid die zugehörige Beschreibung.
+ * @param tid ID der Zahlungsart.
+ * @return  Name der Zahlungsart.
+ */
 QString DBManager::getPaymentText(int zid) {
     QSqlQuery query;
     query.prepare("SELECT bez FROM Zahlart WHERE zID = (:zid) AND bid = (:bid)");
@@ -273,6 +326,11 @@ QString DBManager::getPaymentText(int zid) {
     return query.value(0).toString();
 }
 
+/**
+ * @brief getCategoryText Sucht zu einer Kategorieid die zugehörige Beschreibung.
+ * @param kid ID der Kategorie.
+ * @return Name der Kategorie.
+ */
 QString DBManager::getCategoryText(int kid) {
     QSqlQuery query;
     query.prepare("SELECT bez FROM Kategorie WHERE kid = (:kid)");
@@ -282,6 +340,10 @@ QString DBManager::getCategoryText(int kid) {
     return query.value(0).toString();
 }
 
+/**
+ * @brief cleanTables Löscht alle Datensätze in der Datenbank.
+ * @return True, wenn alles gelöscht wurde, false sonst.
+ */
 bool DBManager::cleanTables(){
     QSqlQuery delTrans;
     delTrans.prepare("DELETE FROM Transaktion");
@@ -294,6 +356,9 @@ bool DBManager::cleanTables(){
     return delCategory.exec() && delPayment.exec() && delTrans.exec() && delUser.exec();
 }
 
+/**
+ * @brief setupTestData Fügt die geforderten Testdaten in die Datenbank ein.
+ */
 void DBManager::setupTestData(){
     QSqlQuery addAdmin;
     addAdmin.prepare("INSERT INTO Benutzer (bid, email, pwd, vname, name, administrator, geb) VALUES (1, 'rd@hs.aa', 'RD', 'Roland', 'Dietrich', 0, '2000-01-01')");

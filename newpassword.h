@@ -7,6 +7,10 @@ namespace Ui {
 class NewPassword;
 }
 
+/**
+ * @brief The NewPassword class
+ * Header-Datei der Klasse "NewPassword".
+ */
 class NewPassword : public QDialog
 {
     Q_OBJECT

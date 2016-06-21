@@ -7,6 +7,9 @@ namespace Ui {
 class Bezahlart;
 }
 
+/**
+ * @brief The Bezahlart class Die Klasse Bezahlart
+ */
 class Bezahlart : public QDialog
 {
     Q_OBJECT

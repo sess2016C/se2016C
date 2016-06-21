@@ -3,6 +3,10 @@
 
 #include <QString>
 
+/**
+ * @brief The kategorie class
+ * Header-Datei für die Klasse "Kategorie".
+ */
 class kategorie
 {
 public:

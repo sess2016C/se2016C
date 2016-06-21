@@ -7,6 +7,9 @@ namespace Ui {
 class Benutzerverwaltung;
 }
 
+/**
+ * @brief The Benutzerverwaltung class Klasse Benutzerverwaltung
+ */
 class Benutzerverwaltung : public QDialog
 {
     Q_OBJECT

@@ -6,7 +6,10 @@
 namespace Ui {
 class Abrechnung;
 }
-
+/**
+ * @brief The Abrechnung class
+ * Klasse Abrechnung, stellt das Fenster "Abrechnung" bereit.
+ */
 class Abrechnung : public QDialog
 {
     Q_OBJECT

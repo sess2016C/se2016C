@@ -6,6 +6,11 @@
 #include "global.h"
 #include "QMessageBox"
 
+
+/**
+ * @brief Bezahlart Konstruktor der Klasse "Bezahlart".
+ * @param parent Standardparameter
+ */
 Bezahlart::Bezahlart(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Bezahlart)
@@ -15,16 +20,25 @@ Bezahlart::Bezahlart(QWidget *parent) :
 
 }
 
+/**
+ * @brief ~Bezahlart Destruktor der Klasse "Bezahlart".
+ */
 Bezahlart::~Bezahlart()
 {
     delete ui;
 }
 
+/**
+ * @brief on_btn_BeAbbrechen_clicked Button "Abbrechen", welcher den Dialog versteckt.
+ */
 void Bezahlart::on_btn_BeAbbrechen_clicked()
 {
     this->hide();
 }
 
+/**
+ * @brief on_btn_BeHinzufuegen_clicked Button "Hinzufügen", mit dem eine Zahlungsart in die Datenbank hinzugefügt wird.
+ */
 void Bezahlart::on_btn_BeHinzufuegen_clicked()
 {
     QString bez = ui->txt_zahlart->text();
@@ -42,6 +56,9 @@ void Bezahlart::on_btn_BeHinzufuegen_clicked()
 
 }
 
+/**
+ * @brief on_btn_BeLoeschen_clicked Button "Löschen", mit dem eine Zahlungsart aus der Liste der verfügbaren Zahlungsarten gelöscht wird.
+ */
 void Bezahlart::on_btn_BeLoeschen_clicked()
 {
     if(ui->list_bezahlart->currentItem() == NULL) {
@@ -60,6 +77,9 @@ void Bezahlart::on_btn_BeLoeschen_clicked()
 
 }
 
+/**
+ * @brief updateList Refresht die Liste der verfügbaren Zahlungsarten.
+ */
 void Bezahlart::updateList() {
     ui->list_bezahlart->clear();
     QSqlQuery query;

@@ -4,6 +4,12 @@
 #include "global.h"
 #include "QSqlQuery"
 
+/**
+ * @brief Kategorieverwaltung::Kategorieverwaltung
+ * @param parent
+ * Öffnet den Dialog zur Verwaltung der Kategorien.
+ * Anschließend wird die Kategorienliste aktualisiert.
+ */
 Kategorieverwaltung::Kategorieverwaltung(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Kategorieverwaltung)
@@ -13,16 +19,28 @@ Kategorieverwaltung::Kategorieverwaltung(QWidget *parent) :
 
 }
 
+/**
+ * @brief Kategorieverwaltung::~Kategorieverwaltung
+ * Destruktor der Klasse.
+ */
 Kategorieverwaltung::~Kategorieverwaltung()
 {
     delete ui;
 }
 
+/**
+ * @brief Kategorieverwaltung::on_btn_KvAbbrechen_clicked
+ * Schließt die Kategorieverwaltung.
+ */
 void Kategorieverwaltung::on_btn_KvAbbrechen_clicked()
 {
     this->hide();
 }
 
+/**
+ * @brief Kategorieverwaltung::on_btn_BeHinzufuegen_clicked
+ * Fügt die eingetragene Kategorie der Liste hinzu.
+ */
 void Kategorieverwaltung::on_btn_BeHinzufuegen_clicked()
 {
     QString cat = ui->txt_newCategory->text();
@@ -32,6 +50,10 @@ void Kategorieverwaltung::on_btn_BeHinzufuegen_clicked()
     }
 }
 
+/**
+ * @brief Kategorieverwaltung::updateList
+ * Aktualisiert die Liste der Kategorien.
+ */
 void Kategorieverwaltung::updateList() {
     ui->list_category->clear();
     QSqlQuery query;
@@ -42,6 +64,10 @@ void Kategorieverwaltung::updateList() {
     }
 }
 
+/**
+ * @brief Kategorieverwaltung::on_btn_BeLoeschen_clicked
+ * Löscht eine ausgewählte Kategorie aus der Liste.
+ */
 void Kategorieverwaltung::on_btn_BeLoeschen_clicked()
 {
     QString cat = ui->list_category->currentItem()->text();

@@ -7,10 +7,21 @@
 #include "global.h"
 #include "newpassword.h"
 
-static const QString path = "haus.db";
+static const QString path = "../haus.db";
 DBManager *db = NULL;
 hauptmenue_adm *newWindowadm = 0;
 
+/**
+ * @brief Haushaltsverwaltung::Haushaltsverwaltung
+ * @param parent
+ * Öffnet den Dialog zur Anmeldung am System (wenn
+ * kein Benutzer in der Datenbank vorhanden ist, wird
+ * die Erstanmeldung ausgeführt), baut eine Verbindung
+ * zur Datenbank auf und reagiert mit dem "Zurücksetzen
+ * der Datenbank auf Auslieferungszustand" bei der Übergabe
+ * der Kommandozeilenparameters "clean" bzw. werden Test-
+ * daten beim Parameter "test" in die Datenbank eingefügt.
+ */
 Haushaltsverwaltung::Haushaltsverwaltung(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Haushaltsverwaltung)
@@ -35,11 +46,20 @@ Haushaltsverwaltung::Haushaltsverwaltung(QWidget *parent) :
     ui->setupUi(this);
 }
 
+/**
+ * @brief Haushaltsverwaltung::~Haushaltsverwaltung
+ * Destruktor der Klasse.
+ */
 Haushaltsverwaltung::~Haushaltsverwaltung()
 {
     delete ui;
 }
 
+/**
+ * @brief Haushaltsverwaltung::erstanmeldung
+ * Öffnet den Dialog zur Erstanmeldung für den
+ * Administrator.
+ */
 void Haushaltsverwaltung::erstanmeldung(){
     Erstanmeldung_adm erstanmeldung_adm;
     erstanmeldung_adm.setModal(true);
@@ -47,17 +67,30 @@ void Haushaltsverwaltung::erstanmeldung(){
     erstanmeldung_adm.exec();
 }
 
+/**
+ * @brief Haushaltsverwaltung::newPassword
+ * Öffnet den Dialog zur Passwortänderung.
+ */
 void Haushaltsverwaltung::newPassword(){
     NewPassword newPWDialog;
     newPWDialog.setModal(true);
     newPWDialog.exec();
 }
 
+/**
+ * @brief Haushaltsverwaltung::on_btn_ABeenden_clicked
+ * Beendet die Anwendung.
+ */
 void Haushaltsverwaltung::on_btn_ABeenden_clicked()
 {
     exit(0);
 }
 
+/**
+ * @brief Haushaltsverwaltung::on_btn_AAnmelden_clicked
+ * Meldet den Benutzer mit den angegebenen Daten am System
+ * an. Abgleich der eingegebenen Daten mit der Datenbank.
+ */
 void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
 {
     QString benutzername = ui->txt_Benutzername->text();
@@ -94,6 +127,11 @@ void Haushaltsverwaltung::on_btn_AAnmelden_clicked()
 
 }
 
+/**
+ * @brief Haushaltsverwaltung::on_txt_Passwort_returnPressed
+ * Nach der Passwortänderung wird der aktuelle Benutzer
+ * sogleich am System angemeldet.
+ */
 void Haushaltsverwaltung::on_txt_Passwort_returnPressed()
 {
     on_btn_AAnmelden_clicked();

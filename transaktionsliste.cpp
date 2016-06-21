@@ -8,6 +8,10 @@
 QList <int> *TStransaktionen; //hier werden transaktionsids der angezeigten transaktionen gespeichert
 QTableWidget *tableTL;
 
+/**
+ * @brief transaktionsliste Konstruktor der Klasse Transaktionsliste.
+ * @param parent Standartparameter
+ */
 transaktionsliste::transaktionsliste(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::transaktionsliste)
@@ -18,21 +22,34 @@ transaktionsliste::transaktionsliste(QWidget *parent) :
     updateList();
 }
 
+/**
+ * @brief ~transaktionsliste Destruktor der Klasse Transaktionsliste
+ */
 transaktionsliste::~transaktionsliste()
 {
     delete ui;
 }
 
+/**
+ * @brief on_btn_TLAbbrechen_clicked Slot des Buttons "Abbrechen", der das Fenster der Klasse Transaktionsliste schließt.
+ */
 void transaktionsliste::on_btn_TLAbbrechen_clicked()
 {
     this->hide();
 }
 
+/**
+ * @brief on_cmb_categories_currentTextChanged Slot, der aufgerufen wird, wenn sich der Text in der Combobox ändert.
+ * @param arg1 Standardparameter.
+ */
 void transaktionsliste::on_cmb_categories_currentTextChanged(const QString &arg1)
 {
     updateList();
 }
 
+/**
+ * @brief updateComboBox Methode, die die Kategorien und ein zusätzliches Item "-- Alles anzeigen --" enthält.
+ */
 void transaktionsliste::updateComboBox() {
     QSqlQuery query;
     query.prepare("SELECT bez FROM Kategorie");
@@ -44,6 +61,9 @@ void transaktionsliste::updateComboBox() {
 
 }
 
+/**
+ * @brief updateList Zeigt die Transaktionen des aktuellen Benutzers aus der Datenbank in der Liste an.
+ */
 void transaktionsliste::updateList() {
     tableTL->clear();
     tableTL->setColumnCount(6);
@@ -139,6 +159,9 @@ void transaktionsliste::updateList() {
 
 }
 
+/**
+ * @brief handleButton Slot der dynamisch generierten "Details"-Buttons, welcher das Detailansichtfenster aufruft.
+ */
 void transaktionsliste::handleButton() {
     int tid = TStransaktionen->at(((QPushButton*)sender())->objectName().toInt());
     Erfassen erfassen;
