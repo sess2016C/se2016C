@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>295</width>
+    <width>292</width>
     <height>223</height>
    </rect>
   </property>
@@ -16,9 +16,9 @@
   <widget class="QLineEdit" name="txt_EaEmail">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>150</x>
      <y>20</y>
-     <width>131</width>
+     <width>121</width>
      <height>21</height>
     </rect>
    </property>
@@ -28,7 +28,7 @@
     <rect>
      <x>20</x>
      <y>140</y>
-     <width>101</width>
+     <width>131</width>
      <height>21</height>
     </rect>
    </property>
@@ -44,9 +44,9 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>100</y>
-     <width>81</width>
+     <width>101</width>
      <height>21</height>
     </rect>
    </property>
@@ -62,9 +62,9 @@
   <widget class="QDateEdit" name="txt_EaGeburtsdatum">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>150</x>
      <y>140</y>
-     <width>151</width>
+     <width>121</width>
      <height>24</height>
     </rect>
    </property>
@@ -72,7 +72,7 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>20</x>
      <y>20</y>
      <width>50</width>
      <height>21</height>
@@ -90,9 +90,9 @@
   <widget class="QLineEdit" name="txt_EaNachname">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>150</x>
      <y>100</y>
-     <width>131</width>
+     <width>121</width>
      <height>21</height>
     </rect>
    </property>
@@ -113,7 +113,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>20</x>
      <y>60</y>
      <width>81</width>
      <height>21</height>
@@ -131,9 +131,9 @@
   <widget class="QLineEdit" name="txt_EaVorname">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>150</x>
      <y>60</y>
-     <width>131</width>
+     <width>121</width>
      <height>21</height>
     </rect>
    </property>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
+    <width>292</width>
     <height>213</height>
    </rect>
   </property>
@@ -42,7 +42,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>10</x>
      <y>20</y>
      <width>81</width>
      <height>21</height>
@@ -60,7 +60,7 @@
   <widget class="QLineEdit" name="txt_benutzerDataVname">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>150</x>
      <y>20</y>
      <width>131</width>
      <height>21</height>
@@ -73,7 +73,7 @@
   <widget class="QLineEdit" name="txt_benutzerDataName">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>150</x>
      <y>60</y>
      <width>131</width>
      <height>21</height>
@@ -86,9 +86,9 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>60</y>
-     <width>81</width>
+     <width>101</width>
      <height>21</height>
     </rect>
    </property>
@@ -106,7 +106,7 @@
     <rect>
      <x>10</x>
      <y>100</y>
-     <width>101</width>
+     <width>131</width>
      <height>21</height>
     </rect>
    </property>
@@ -122,7 +122,7 @@
   <widget class="QDateEdit" name="txt_benutzerDataGeb">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>150</x>
      <y>100</y>
      <width>131</width>
      <height>24</height>
